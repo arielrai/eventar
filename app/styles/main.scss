@@ -1,0 +1,211 @@
+$icon-font-path: '../fonts/';
+
+// bower:scss
+@import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+
+  /* Make the masthead heading the same height as the navigation */
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+  }
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+  .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+  p + h4 {
+    margin-top: 28px;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+.message-item {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  margin-left: 25px;
+  position: relative;
+}
+.message-item .message-inner {
+  background: #f7f9fa;
+  border: 1px solid #eff2f3;
+  border-radius: 3px;
+  padding: 10px;
+  position: relative;
+}
+.message-item .message-inner:before {
+  border-right: 5px solid #eff2f3;
+  border-style: solid;
+  border-width: 5px;
+  color: rgba(0,0,0,0);
+  content: "";
+  display: block;
+  height: 0;
+  position: absolute;
+  left: -10px;
+  top: 10px;
+  width: 0;
+}
+.message-item .message-inner:after {
+  border-right: 5px solid #f7f9fa;
+  border-style: solid;
+  border-width: 5px;
+  color: rgba(0,0,0,0);
+  content: "";
+  display: block;
+  height: 0;
+  position: absolute;
+  left: -9px;
+  top: 10px;
+  width: 0;
+}
+.message-item:before {
+  background: #eff2f3;
+  border-radius: 2px;
+  bottom: -28px;
+  content: "";
+  height: 100%;
+  left: -14px;
+  position: absolute;
+  width: 1px;
+}
+.message-item:after {
+  background: #fff;
+  border: 1px solid #2e9df7;
+  border-radius: 50%;
+  content: "";
+  height: 11px;
+  left: -19px;
+  position: absolute;
+  top: 10px;
+  width: 11px;
+}
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table;
+}
+.message-item .message-head {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+}
+.message-item .message-head .message-icon {
+  background-color: #8560a8;
+  padding: 2px 2px;
+  margin-right: 10px;
+}
+.message-item .message-head .message-icon a i{
+  color: #fff;
+  font-size: 1.3em;
+}
+.message-item .message-head .user-detail {
+  overflow: hidden;
+}
+.message-item .message-head .user-detail h5 {
+  font-size: 1.2em;
+  color: #585b5e;
+  margin: 0;
+  margin-bottom: 2px;
+}
+.message-item .message-head .post-type >p {
+  color: #8560a8;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: .7em;
+  margin: 0;
+  line-height: 17px;
+}
+.message-item .message-head .post-time {
+  float: left;
+}
+.message-item .message-head .post-time >p {
+  color: #858b8f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: .6em;
+  line-height: 15px;
+  margin: 0;
+}
+.message-item .qa-message-content p {
+  text-align: center;
+  color: #585b5e;
+  font-size: .9em;
+  margin: 0;
+}
+.timeline-img {
+  min-height: 65px;
+  max-height: 65px;
+  //border-radius: 50%;
+}

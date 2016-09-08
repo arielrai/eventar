@@ -1,0 +1,86 @@
+<div class="container">
+  <form>
+    <div class="col-md-12">
+      <h2>Cadastrar evento</h2>
+      <hr>
+      <div class="col-sm-5 col-md-5">
+        <div class="form-group">
+          <label>Nome</label>
+          <input class="form-control" placeholder="Digite o nome do evento" ng-model="evento.nome">
+        </div>
+        <div class="form-group">
+          <label>Descrição</label>
+          <textarea rows="10" class="form-control" placeholder="Descreva o evento"
+                    ng-model="evento.descricao"></textarea>
+        </div>
+      </div>
+      <div class="col-sm-7 col-md-7">
+        <ng-dropzone style="height:315px" class="dropzone" options="dzOptions" callbacks="dzCallbacks"
+                     methods="dzMethods"></ng-dropzone>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="col-sm-12 col-md-5">
+        <div class="form-group">
+          <label>Data Inicial</label>
+          <p class="input-group">
+            <input type="text" class="form-control" datetime-picker="dd/MM/yyyy HH:mm"
+                   is-open="isOpen" ng-model="evento.dtInicial"/>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openCalendar($event, prop)"><i
+                class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+        </div>
+        <div class="form-group">
+          <label>Data Final</label>
+          <p class="input-group">
+            <input type="text" class="form-control" datetime-picker="dd/MM/yyyy HH:mm"
+                   is-open="isOpen" ng-model="evento.dtFinal"/>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openCalendar($event, prop)"><i
+                class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+        </div>
+        <div class="form-group">
+          <label>Organizador</label>
+          <div class="form-group">
+            <input class="form-control" placeholder="Digite o nome do evento" ng-model="evento.organizador">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Evento no facebook</label>
+          <p class="input-group">
+            <input type="text" class="form-control" ng-model="urlFacebook" placeholder="Evento do facebook"
+                   ng-model="evento.facebook"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="search()"><i
+                  class="glyphicon glyphicon-thumbs-up"></i></button>
+              </span>
+          </p>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-7">
+        <div class="form-group">
+          <label>Localização</label>
+          <input places-auto-complete
+                 ng-model="address"
+                 component-restrictions="{country:'br'}"
+                 on-place-changed="placeChanged()"
+                 type="text" class="form-control"
+                 placeholder="Digite a localização do evento" /> <br/>
+          Endereço:{{address}}<br/>
+        </div>
+        <ng-map center={{center}} style="width:100%; height:100%;"></ng-map>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
+          <hr>
+          <button ng-click="submitEvento(evento)" class="btn btn-primary">Cadastrar evento!</button>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

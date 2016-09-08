@@ -1,0 +1,26 @@
+{
+  "name": "eventar2",
+  "private": true,
+  "dependencies": {
+    "bootstrap-sass": "~3.3.5",
+    "modernizr": "~2.8.1",
+    "ng-dropzone": "ngdropzone#^1.0.5",
+    "dropzone": "^4.3.0",
+    "angular-route": "^1.5.8",
+    "bootstrap-ui-datetime-picker": "^2.4.3",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.42"
+  },
+  "overrides": {
+    "bootstrap-sass": {
+      "main": [
+        "assets/stylesheets/_bootstrap.scss",
+        "assets/fonts/bootstrap/*",
+        "assets/javascripts/bootstrap.js"
+      ]
+    }
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
+  }
+}
