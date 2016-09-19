@@ -7,6 +7,12 @@ app.config(function ($routeProvider) {
     })
     .when('/novoEvento', {
       templateUrl: 'pages/novoEvento.html'
+    })
+    .when('/login', {
+      templateUrl: 'pages/login.html'
+    })
+    .when('/criarConta', {
+      templateUrl: 'pages/criarConta.html'
     }).otherwise({
       redirectTo: '/eventos'
     });
@@ -22,6 +28,10 @@ app.controller('mainController', function ($scope, NgMap) {
 
   $scope.submitEvento = function (evento) {
     console.log(evento);
+  };
+
+  $scope.submitConta = function (usuario) {
+    console.log(usuario);
   };
 
   $scope.getDistanceFromLatLonInKm = function (evento, lat2, lon2) {
