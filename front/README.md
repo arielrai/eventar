@@ -1,4 +1,4 @@
-# Eventar #
+# Eventar Front #
 
 ### Pré-requisitos ###
 * Instalar node 4.x.x
