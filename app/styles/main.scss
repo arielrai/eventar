@@ -15,6 +15,11 @@ $icon-font-path: '../fonts/';
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+  background: url("/images/dv.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -213,9 +218,12 @@ body {
 .mainBody{
   margin-top: 30px;
 }
-.jumbotron{
-  text-align: left;
-  padding-top: 30px;
-  
-
+.footer-background {
+  background: black;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  border-top: white 1px solid;
+  border-bottom: white 1px solid;
 }

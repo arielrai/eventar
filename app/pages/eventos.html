@@ -1,32 +1,40 @@
-<div class="container">
-  <div ng-repeat="evento in eventos" class="qa-message-list" id="wallmessages" ng-init="getDistanceFromLatLonInKm(evento, evento.lat, evento.lng)">
-    <div class="message-item" id="m16">
-      <div class="message-inner">
-        <div class="message-head clearfix">
-          <div class="message-icon pull-left">
-            <img class="timeline-img"
-                 src={{evento.urlImagem}}>
-          </div>
-          <div class="user-detail">
-            <h5 class="handle">
-              <a href={{evento.urlFacebook}}> <img width="20px" height="20px" src="https://cdn1.iconfinder.com/data/icons/logotypes/32/square-facebook-512.png"/> </a>
-              {{evento.nome}}
-              <div class="pull-right">Acontecerá {{evento.distancia |  number : 2}} km de você!</div>
-            </h5>
-            <div class="post-type">
-              <p>Evento organizado por <u>{{evento.organizador}}</u></p>
+<div class="container-fluid" >
+  <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div class="panel panel-info" >
+      <div class="panel-heading">
+        <div class="panel-title">Busque um evento!</div>
+      </div>
+      <div style="padding-top:30px" class="panel-body" >
+        <div ng-repeat="evento in eventos" class="qa-message-list" id="wallmessages" ng-init="getDistanceFromLatLonInKm(evento, evento.lat, evento.lng)">
+          <div class="message-item" id="m16">
+            <div class="message-inner">
+              <div class="message-head clearfix">
+                <div class="message-icon pull-left">
+                  <img class="timeline-img"
+                       src={{evento.urlImagem}}>
+                </div>
+                <div class="user-detail">
+                  <h5 class="handle">
+                    <a href={{evento.urlFacebook}}> <img width="20px" height="20px" src="https://cdn1.iconfinder.com/data/icons/logotypes/32/square-facebook-512.png"/> </a>
+                    {{evento.nome}}
+                    <div class="pull-right">Acontecerá {{evento.distancia |  number : 2}} km de você!</div>
+                  </h5>
+                  <div class="post-type">
+                    <p>Evento organizado por <u>{{evento.organizador}}</u></p>
+                  </div>
+                  <div class="post-time">
+                    <p><i class="glyphicon glyphicon-time"></i> Horário Inicial {{evento.dtInicial | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                    <p><i class="glyphicon glyphicon-time"></i> Horário Final {{evento.dtFinal | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="qa-message-content">
+                <p>{{evento.descricao}}</p>
+              </div>
             </div>
-            <div class="post-time">
-              <p><i class="glyphicon glyphicon-time"></i> Horário Inicial {{evento.dtInicial | date:'dd/MM/yyyy HH:mm:ss'}}</p>
-              <p><i class="glyphicon glyphicon-time"></i> Horário Final {{evento.dtFinal | date:'dd/MM/yyyy HH:mm:ss'}}</p>
-            </div>
           </div>
-        </div>
-        <div class="qa-message-content">
-          <p>{{evento.descricao}}</p>
         </div>
       </div>
     </div>
-
   </div>
 </div>
