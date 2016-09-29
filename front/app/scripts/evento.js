@@ -1,7 +1,7 @@
 /**
  * Created by Ariel on 24/09/2016.
  */
-angular.module('eventar').controller('EventoCtrl', function ($scope, NgMap, $http) {
+var eventar = angular.module('eventar').controller('EventoCtrl', function ($scope, NgMap, $http) {
   $scope.submitEvento = function (evento) {
     console.log(evento);
   }
@@ -94,3 +94,13 @@ angular.module('eventar').controller('EventoCtrl', function ($scope, NgMap, $htt
   };
 
 });
+
+
+eventar.config(['$httpProvider', function($httpProvider) {
+  $httpProvider.defaults.useXDomain = true;
+  $httpProvider.defaults.withCredentials = true;
+  delete $httpProvider.defaults.headers.common["X-Requested-With"];
+  $httpProvider.defaults.headers.common["Accept"] = "application/json";
+  $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
+}
+]);

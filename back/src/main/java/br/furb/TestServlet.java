@@ -2,18 +2,21 @@ package br.furb;
 
 import java.io.IOException;
 
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/batata")
-public class TestServlet extends GenericServlet{
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+@WebServlet("/evento")
+@CrossOrigin(origins = "http://localhost:9000")
+public class TestServlet extends HttpServlet{
 
 	@Override
-	public void service(ServletRequest arg0, ServletResponse arg1) throws ServletException, IOException {
-		arg1.getWriter().append("quando nasce");
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.getWriter().append("ASDASA");
 	}
     
 }
