@@ -1,4 +1,4 @@
-package br.furb;
+package br.furb.config;
 
 import java.io.IOException;
 
