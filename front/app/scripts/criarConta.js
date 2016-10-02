@@ -3,6 +3,6 @@
  */
 angular.module('eventar').controller('CriaContaCtrl',function($scope, $http) {
   $scope.submitConta = function (usuario) {
-    $http.post("http://localhost:8080/usuario", usuario);
+    $http.post('http://localhost:8080/usuario', usuario);
   };
 });

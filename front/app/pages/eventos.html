@@ -1,5 +1,5 @@
-<div class="container-fluid" >
-  <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+<div class="container-fluid">
+  <div id="loginbox" style="margin-top:50px;" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
     <div class="panel panel-info" >
       <div class="panel-heading">
         <div class="panel-title">Busque um evento!</div>
@@ -29,7 +29,7 @@
                 </div>
               </div>
               <div class="qa-message-content">
-                <p>{{evento.descricao}}</p>
+                <p> <i>{{evento.descricao}}</i> <button type="button" class="btn btn-link pull-right" ng-click="navigateEvento(evento.nome)">Editar evento?</button></p>
               </div>
             </div>
           </div>

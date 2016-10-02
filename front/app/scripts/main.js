@@ -6,7 +6,7 @@ app.config(function ($routeProvider) {
       templateUrl: 'pages/eventos.html',
       controller: 'EventosCtrl'
     })
-    .when('/novoEvento', {
+    .when('/novoEvento/:eventoNome?', {
       templateUrl: 'pages/novoEvento.html',
       controller: 'EventoCtrl'
     })

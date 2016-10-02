@@ -1,0 +1,61 @@
+<form role="form" name="dados" class="panel">
+  <div class="tab-content">
+    <div class="tab-pane active col-md-12">
+      <h3>Dados do evento!</h3>
+      <hr>
+      <form>
+        <div class="col-md-12">
+          <div class="form-group col-sm-7 col-md-7">
+            <label>Nome</label>
+            <input required class="form-control" placeholder="Nome do evento" ng-model="evento.nome">
+          </div>
+          <div class="form-group col-sm-5 col-md-5">
+            <label>Categoria</label>
+            <select required class="form-control" ng-options="option.nome for option in categorias track by option.nome" ng-model="evento.categoria">
+              <option value="" disabled selected hidden>Selecione a categoria</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-6 col-md-6">
+            <label>Evento no facebook</label>
+            <input  type="text" class="form-control" ng-model="evento.urlFacebook" placeholder="Evento do facebook"
+                     ng-model="evento.facebook"/>
+          </div>
+          <div class="form-group col-sm-6 col-md-6">
+            <label>Organizador</label>
+            <input required type="text" class="form-control" placeholder="Organizador do evento" ng-model="evento.organizador"/>
+          </div>
+          <div class="form-group col-sm-6 col-md-6">
+            <label>Data Inicial</label>
+            <div class='input-group date' id='datetimepicker'>
+              <input required type='text' id="data1" class="form-control" placeholder="Digite a data inicial" ng-blur="atualizaDatas()"/>
+              <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+            </div>
+          </div>
+
+          <div class="form-group col-sm-6 col-md-6">
+            <label>Data Final</label>
+            <div class='input-group date' id='datetimepicker1'>
+              <input required type='text' id="data2" class="form-control" placeholder="Digite a data final" ng-blur="atualizaDatas()"/>
+              <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-md-12">
+            <label>Descrição</label>
+            <textarea required rows="10" class="form-control" placeholder="Descreva o evento"
+                      ng-model="evento.descricao"></textarea>
+          </div>
+          <div class="form-group ">
+            <div class="col-md-12">
+              <hr>
+              <button class="btn btn-primary pull-right" ng-disabled="!canGoSecondStep()" ng-click="secondStep()" >Cadastrar localização!</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</form>

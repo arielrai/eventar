@@ -1,83 +1,80 @@
 <div class="container-fluid">
-  <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-    <div class="panel panel-info">
+  <div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div class="panel panel-info" >
       <div class="panel-heading">
         <div class="panel-title">Cadastrar evento</div>
       </div>
-      <div style="padding-top:30px" class="panel-body">
-        <form>
-          <div class="col-md-12">
-            <div class="col-sm-5 col-md-5">
-              <div class="form-group">
-                <label>Nome</label>
-                <input class="form-control" placeholder="Digite o nome do evento" ng-model="evento.nome">
+      <div style="margin-top:-50px" class="panel-body" >
+        <div class="row">
+          <section>
+            <div class="wizard">
+              <div class="wizard-inner">
+                <div class="connecting-line"></div>
+                <ul class="nav nav-tabs" role="tablist">
+
+                  <li role="presentation" ng-class="{active: steps.firstStep}" ng-click="firstStep()" >
+                    <a href="" >
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </span>
+                    </a>
+                  </li>
+
+                  <li role="presentation" ng-class="{active: steps.secondStep, disabled: !canGoSecondStep()}" ng-click="secondStep()" >
+                    <a href="" >
+                            <span class="round-tab" data-toggle="tooltip" ng-show="canGoSecondStep()">
+                                <i class="glyphicon glyphicon-map-marker"></i>
+                            </span>
+                            <span class="round-tab" data-toggle="tooltip" ng-show="!canGoSecondStep()" title={{secondStepTooltip()}}>
+                                <i class="glyphicon glyphicon-map-marker"></i>
+                            </span>
+                    </a>
+                  </li>
+                  <li role="presentation" ng-class="{active: steps.thirdStep, disabled: !canGoThirdStep()}" ng-click="thirdStep()" >
+                    <a href="" >
+                      <span class="round-tab" data-toggle="tooltip" ng-show="canGoThirdStep()">
+                                <i class="glyphicon glyphicon-list"></i>
+                            </span>
+                      <span class="round-tab" data-toggle="tooltip" ng-show="!canGoThirdStep()" title={{thirdStepTooltip()}}>
+                                <i class="glyphicon glyphicon-list"></i>
+                            </span>
+                    </a>
+                  </li>
+
+                  <li role="presentation" class="disabled">
+                    <a href="" >
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-ok"></i>
+                            </span>
+                    </a>
+                  </li>
+                </ul>
               </div>
-              <div class="form-group">
-                <label>Categoria</label>
-                <input class="form-control" placeholder="Digite o da Categoria do evento" ng-model="evento.categoria">
-              </div>
-              <div class="form-group">
-                <label>Descrição</label>
-                <textarea rows="10" class="form-control" placeholder="Descreva o evento"
-                          ng-model="evento.descricao"></textarea>
-              </div>
+              <dados ng-show="steps.firstStep"> </dados>
+              <localizacao ng-if="steps.secondStep"> </localizacao>
             </div>
-            <div class="col-sm-7 col-md-7">
-              <ng-dropzone style="height:315px" class="dropzone" options="dzOptions" callbacks="dzCallbacks"
-                           methods="dzMethods"></ng-dropzone>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="col-sm-12 col-md-5">
-              <div class="form-group">
-                <label>Data Inicial</label>
-                <input type="date" class="form-control" ng-model="evento.dtInicial"/>
-              </div>
-              <div class="form-group">
-                <label>Data Final</label>
-                <input type="date" class="form-control" ng-model="evento.dtFinal"/>
-              </div>
-              <div class="form-group">
-                <label>Organizador</label>
-                <div class="form-group">
-                  <input class="form-control" placeholder="Digite o nome do evento" ng-model="evento.organizador">
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Evento no facebook</label>
-                <p class="input-group">
-                  <input type="text" class="form-control" ng-model="urlFacebook" placeholder="Evento do facebook"
-                         ng-model="evento.facebook"/>
-                  <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="search()"><i
-                  class="glyphicon glyphicon-thumbs-up"></i></button>
-              </span>
-                </p>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-7">
-              <div class="form-group">
-                <label>Localização</label>
-                <input places-auto-complete
-                       ng-model="evento.address"
-                       component-restrictions="{country:'br'}"
-                       on-place-changed="placeChanged()"
-                       type="text" class="form-control"
-                       placeholder="Digite a localização do evento"/> <br/>
-                Endereço:{{evento.address}}<br/>
-              </div>
-              <ng-map center={{center}} style="width:100%; height:100%;"></ng-map>
-            </div>
-            <div class="form-group">
-              <div class="col-md-12">
-                <hr>
-                <button ng-click="submitEvento(evento)" class="btn btn-primary">Cadastrar evento!</button>
-                <hr>
-              </div>
-            </div>
-          </div>
-        </form>
+          </section>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+<script type="text/javascript">
+  $(function () {
+    $('#datetimepicker').datetimepicker({
+      locale: 'pt-br'
+    });
+  });
+</script>
+<script type="text/javascript">
+  $(function () {
+    $('#datetimepicker1').datetimepicker({
+      locale: 'pt-br'
+    });
+  });
+</script>
