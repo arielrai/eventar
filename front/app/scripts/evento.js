@@ -10,6 +10,7 @@ var eventar = angular.module('eventar').controller('EventoCtrl', function ($scop
       angular.element( document.querySelector( '#data2' )).val($scope.evento.dtFinal);
     })
   }
+
   $scope.steps = {};
   $scope.categorias = [{id: 1, nome: 'Esportes'}, {id: 2, nome: 'Entretenimento'}, {id: 3, nome: 'Estilo de vida'}];
   $scope.steps.firstStep = true;
@@ -49,7 +50,7 @@ var eventar = angular.module('eventar').controller('EventoCtrl', function ($scop
 
   $scope.secondStepTooltip = function () {
     if (!$scope.canGoSecondStep()) {
-      return 'Preencha os dados do evento'
+      return 'Defina o local onde o evento acontecerá!'
     } else {
       return '';
     }
@@ -70,7 +71,7 @@ var eventar = angular.module('eventar').controller('EventoCtrl', function ($scop
 
   $scope.thirdStepTooltip = function () {
     if (!$scope.canGoThirdStep()) {
-      return 'Preencha os dados da localização!'
+      return 'Defina o que você precisa no seu evento!'
     } else {
       return '';
     }
@@ -141,3 +142,30 @@ eventar.directive('localizacao', function (NgMap, $http) {
     }
   }
 });
+
+eventar.directive('necessidades', function () {
+  return {
+    templateUrl: 'pages/evento/eventoNecessidades.html',
+    restrict: 'E',
+    scope: false,
+    link: function ($scope) {
+
+      $scope.necessidades = [];
+
+      $scope.adicionarNecessidade = function (necessidade) {
+        $scope.necessidades.push(necessidade);
+        delete $scope.necessidade;
+        $scope.necessidades.$setPristine();
+      }
+
+      $scope.removerNecessidade = function (necessidade) {
+        var index;
+        index = $scope.necessidades.indexOf(necessidade);
+        $scope.necessidades.splice(index, 1);
+        delete $scope.necessidade;
+      }
+    }
+  }
+});
+
+

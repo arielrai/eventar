@@ -2,7 +2,7 @@
   <div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
     <div class="panel panel-info" >
       <div class="panel-heading">
-        <div class="panel-title">Cadastrar evento</div>
+        <div style="color: #0081c2; font-size:25px" class="panel-heading">Criando novo evento</div>
       </div>
       <div style="margin-top:-50px" class="panel-body" >
         <div class="row">
@@ -52,6 +52,7 @@
               </div>
               <dados ng-show="steps.firstStep"> </dados>
               <localizacao ng-if="steps.secondStep"> </localizacao>
+              <necessidades ng-if="steps.thirdStep"> </necessidades>
             </div>
           </section>
         </div>

@@ -1,0 +1,44 @@
+<form role="form" name="necessidades" class="panel">
+  <div class="tab-content">
+    <div class="tab-pane active col-md-12">
+      <h3>Defina o que você precisa no seu evento e encontre patrocinadores!</h3>
+      <hr>
+      <form>
+        <div class="col-md-12">
+          <br class="form-group col-sm-7 col-md-7">
+            <label>O quê você precisa no evento?</label>
+            <div class="input-group">
+              <input required class="form-control" placeholder="Digite uma necessidade. Ex.: DJ,  Refrigerante, etc" ng-model="necessidade.descricao">
+              <span class="input-group-btn">
+                <button class="btn btn-primary btn-block" ng-click="adicionarNecessidade(necessidade)"
+                        ng-disabled="!necessidade.descricao">Adicionar</button>
+              </span>
+            </div>
+            </br>
+
+            <h4>Minha lista de necessidades</h4>
+            <table class="table">
+              <tr>
+              </tr>
+              <tr ng-mouseleave="necessidade.selecionado=false" ng-mouseover="necessidade.selecionado=true"
+                  ng-class="{selecionado : necessidade.selecionado}" ng-repeat="necessidade in necessidades">
+                <td>{{necessidade.descricao}}</td>
+                <td style="margin-left: auto">
+                  <button uib-tooltip="Clique aqui para excluir a necessidade" class="btn btn-info" ng-click="removerNecessidade(necessidade)" ng-show="necessidade.selecionado">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="form-group ">
+            <div class="col-md-12">
+              <hr>
+              <button class="btn btn-primary pull-right" ng-disabled="!canGoSecondStep()" ng-click="secondStep()" >Finalizar!</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</form>
