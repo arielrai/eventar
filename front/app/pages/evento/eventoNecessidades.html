@@ -21,7 +21,7 @@
               <tr>
               </tr>
               <tr ng-mouseleave="necessidade.selecionado=false" ng-mouseover="necessidade.selecionado=true"
-                  ng-class="{selecionado : necessidade.selecionado}" ng-repeat="necessidade in necessidades">
+                  ng-class="{selecionado : necessidade.selecionado}" ng-repeat="necessidade in listaNecessidades">
                 <td>{{necessidade.descricao}}</td>
                 <td style="margin-left: auto">
                   <button uib-tooltip="Clique aqui para excluir a necessidade" class="btn btn-info" ng-click="removerNecessidade(necessidade)" ng-show="necessidade.selecionado">
@@ -34,7 +34,7 @@
           <div class="form-group ">
             <div class="col-md-12">
               <hr>
-              <button class="btn btn-primary pull-right" ng-disabled="!canGoSecondStep()" ng-click="secondStep()" >Finalizar!</button>
+              <button class="btn btn-primary pull-right" ng-disabled="!canGoLastStep()" ng-click="lastStep()" >Finalizar!</button>
             </div>
           </div>
         </div>

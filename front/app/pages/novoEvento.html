@@ -41,9 +41,12 @@
                     </a>
                   </li>
 
-                  <li role="presentation" class="disabled">
+                  <li role="presentation" ng-class="{active: steps.lastStep, disabled: !canGoLastStep()}" ng-click="lastStep()" >
                     <a href="" >
-                            <span class="round-tab">
+                      <span class="round-tab" data-toggle="tooltip" ng-show="canGoLastStep()">
+                                <i class="glyphicon glyphicon-ok"></i>
+                            </span>
+                      <span class="round-tab" data-toggle="tooltip" ng-show="!canGoLastStep()" title={{lastStepTooltip()}}>
                                 <i class="glyphicon glyphicon-ok"></i>
                             </span>
                     </a>
@@ -53,6 +56,7 @@
               <dados ng-show="steps.firstStep"> </dados>
               <localizacao ng-if="steps.secondStep"> </localizacao>
               <necessidades ng-if="steps.thirdStep"> </necessidades>
+              <resumo ng-if="steps.lastStep"> </resumo>
             </div>
           </section>
         </div>

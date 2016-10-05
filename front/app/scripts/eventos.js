@@ -15,7 +15,7 @@ angular.module('eventar').controller('EventosCtrl', function ($scope, $http, $lo
   });
 
   $scope.navigateEvento = function(nome){
-    $location.path('/novoEvento/'+ nome)
+    $location.path('/novoEvento/'+ nome);
   }
 
   //Calcula a distância de um evento

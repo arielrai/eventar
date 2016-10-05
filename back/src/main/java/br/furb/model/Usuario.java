@@ -1,4 +1,4 @@
-package br.furb.conta;
+package br.furb.model;
 
 public class Usuario {
 

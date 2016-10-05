@@ -3,12 +3,19 @@
  */
 var eventar = angular.module('eventar').controller('EventoCtrl', function ($scope, NgMap, $http, $routeParams) {
   $scope.evento = {};
-  if(!!$routeParams.eventoNome){
-    $http.get('https://localhost:8443/evento?nome='+ $routeParams.eventoNome).then(function (response) {
+  $scope.listaNecessidades = [];
+
+  if (!!$routeParams.eventoNome) {
+    $http.get('https://localhost:8443/evento?nome=' + $routeParams.eventoNome).then(function (response) {
       $scope.evento = response.data;
-      angular.element( document.querySelector( '#data1' )).val($scope.evento.dtInicial);
-      angular.element( document.querySelector( '#data2' )).val($scope.evento.dtFinal);
-    })
+      $scope.eventoOriginalName = angular.copy($scope.evento.nome);
+      angular.element(document.querySelector('#data1')).val($scope.evento.dtInicial);
+      angular.element(document.querySelector('#data2')).val($scope.evento.dtFinal);
+    });
+    $http.get('https://localhost:8443/necessidade?nome=' + $routeParams.eventoNome).then(function (response) {
+      $scope.listaNecessidades = response.data;
+    });
+
   }
 
   $scope.steps = {};
@@ -20,9 +27,9 @@ var eventar = angular.module('eventar').controller('EventoCtrl', function ($scop
       $scope.steps[key] = false;
     });
   }
-  $scope.atualizaDatas = function(){
-    $scope.evento.dtInicial =  angular.element( document.querySelector( '#data1' )).val();
-    $scope.evento.dtFinal =  angular.element( document.querySelector( '#data2' )).val();
+  $scope.atualizaDatas = function () {
+    $scope.evento.dtInicial = angular.element(document.querySelector('#data1')).val();
+    $scope.evento.dtFinal = angular.element(document.querySelector('#data2')).val();
   }
 
   //Métodos da primeira etapa
@@ -44,34 +51,74 @@ var eventar = angular.module('eventar').controller('EventoCtrl', function ($scop
       $scope.cleanSteps();
       $scope.steps.secondStep = true;
       $scope.atualizaDatas();
-      $http.post('https://localhost:8443/evento', $scope.evento);
+      $scope.salvaEvento();
     }
   }
 
+  $scope.salvaEvento = function () {
+    $http.post('https://localhost:8443/evento', $scope.evento);
+    if (!!$scope.eventoOriginalName && !angular.equals($scope.eventoOriginalName, $scope.evento.nome)) {
+      $scope.salvaNecessidades($scope.evento.nome, $scope.eventoOriginalName);
+      $scope.eventoOriginalName = $scope.evento.nome;
+    } else {
+      $scope.salvaNecessidades($scope.evento.nome);
+    }
+  };
+
+  $scope.salvaNecessidades = function (eventoNome, prevEventoNome) {
+    //if($scope.listaNecessidades.length > 0){
+    var necessidades = [];
+    angular.forEach($scope.listaNecessidades, function (value, key) {
+      necessidades.push({descricao: value.descricao, eventoNome: eventoNome, prevEventoNome: prevEventoNome})
+    });
+    $http.post('https://localhost:8443/necessidade', necessidades);
+    //}
+  };
+
   $scope.secondStepTooltip = function () {
     if (!$scope.canGoSecondStep()) {
-      return 'Defina o local onde o evento acontecerá!'
+      return 'Defina as informações do seu evento para habilitar esta etapa!'
     } else {
-      return '';
+      return 'Informações de localização';
     }
   }
 
   //Métodos da terceira etapa
   $scope.canGoThirdStep = function () {
-    return !!$scope.evento.lat && $scope.evento.lng;
+    return !!$scope.evento.lat && !!$scope.evento.lng && !!$scope.evento.address;
   }
 
   $scope.thirdStep = function () {
     if ($scope.canGoThirdStep()) {
       $scope.cleanSteps();
       $scope.steps.thirdStep = true;
-      $http.post('https://localhost:8443/evento', $scope.evento);
+      $scope.salvaEvento();
+    }
+  }
+
+  $scope.canGoLastStep = function () {
+    return $scope.canGoSecondStep() && $scope.canGoThirdStep();
+  }
+
+  $scope.lastStep = function () {
+    if ($scope.canGoLastStep()) {
+      $scope.cleanSteps();
+      $scope.steps.lastStep = true;
+      $scope.salvaEvento();
     }
   }
 
   $scope.thirdStepTooltip = function () {
     if (!$scope.canGoThirdStep()) {
-      return 'Defina o que você precisa no seu evento!'
+      return 'Defina o local onde o evento acontecerá para habilitar esta etapa!'
+    } else {
+      return 'Necessidades do evento';
+    }
+  }
+
+  $scope.lastStepTooltip = function () {
+    if (!$scope.canGoLastStep()) {
+      return 'Preencha as etapas anteriores para habilitar esta etapa!'
     } else {
       return '';
     }
@@ -92,11 +139,6 @@ eventar.directive('localizacao', function (NgMap, $http) {
     restrict: 'E',
     scope: false,
     link: function ($scope) {
-      if(!!$scope.evento.lng){
-        $scope.center = [$scope.evento.lat, $scope.evento.lng];
-      } else{
-        $scope.center = [-26.9121973, -49.0869398];
-      }
       var markers = [];
 
       $scope.placeChanged = function () {
@@ -118,14 +160,19 @@ eventar.directive('localizacao', function (NgMap, $http) {
             position: location,
             map: map
           });
-          $scope.evento.lat = location.lat();
-          $scope.evento.lng = location.lng();
+          if (angular.isFunction(location.lat)) {
+            $scope.evento.lat = location.lat();
+            $scope.evento.lng = location.lng();
+          }
           $http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $scope.evento.lat + ', ' + $scope.evento.lng + '&sensor=true').then(function (response) {
             $scope.evento.address = response.data.results[0].formatted_address;
           });
 
 
           markers.push(marker);
+        }
+        if (!!$scope.evento.lat) {
+          $scope.placeMarker({lat: parseFloat($scope.evento.lat), lng: parseFloat($scope.evento.lng)})
         }
       });
 
@@ -139,6 +186,12 @@ eventar.directive('localizacao', function (NgMap, $http) {
       function clearMarkers() {
         setMapOnAll(null);
       }
+
+      if (!!$scope.evento.lng) {
+        $scope.center = [$scope.evento.lat, $scope.evento.lng];
+      } else {
+        $scope.center = [-26.9121973, -49.0869398];
+      }
     }
   }
 });
@@ -149,20 +202,30 @@ eventar.directive('necessidades', function () {
     restrict: 'E',
     scope: false,
     link: function ($scope) {
-
-      $scope.necessidades = [];
-
       $scope.adicionarNecessidade = function (necessidade) {
-        $scope.necessidades.push(necessidade);
+        $scope.listaNecessidades.push(necessidade);
         delete $scope.necessidade;
-        $scope.necessidades.$setPristine();
       }
 
       $scope.removerNecessidade = function (necessidade) {
         var index;
-        index = $scope.necessidades.indexOf(necessidade);
-        $scope.necessidades.splice(index, 1);
+        index = $scope.listaNecessidades.indexOf(necessidade);
+        $scope.listaNecessidades.splice(index, 1);
         delete $scope.necessidade;
+      }
+    }
+  }
+});
+
+eventar.directive('resumo', function ($location) {
+  return {
+    templateUrl: 'pages/evento/eventoResumo.html',
+    restrict: 'E',
+    scope: false,
+    link: function ($scope) {
+      $scope.finalizarEvento = function () {
+        $scope.salvaEvento();
+        $location.path('/eventos');
       }
     }
   }

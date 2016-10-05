@@ -1,4 +1,4 @@
-package br.furb.conta;
+package br.furb.endpoints;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.soap.AddressingFeature.Responses;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -17,9 +16,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.furb.file.FileManager;
 
-@WebServlet("/usuario")
-public class UsuarioServlet extends HttpServlet {
+@WebServlet("/necessidade")
+public class NecessidadeServlet extends HttpServlet {
 
+	private static final String NOME_EVENTO = "nome";
 	private static final ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().build();
 
 	@Override
@@ -33,22 +33,13 @@ public class UsuarioServlet extends HttpServlet {
 		} catch (Exception e) {
 			resp.setStatus(HttpStatus.BAD_REQUEST.value());
 		}
-		FileManager.salvaUsuario(jb.toString());
+		FileManager.salvaNecessidade(jb.toString());
 		resp.setStatus(HttpStatus.OK.value());
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		StringBuffer jb = new StringBuffer();
-		String line = null;
-		try {
-			BufferedReader reader = req.getReader();
-			while ((line = reader.readLine()) != null)
-				jb.append(line);
-		} catch (Exception e) {
-			resp.setStatus(HttpStatus.BAD_REQUEST.value());
-		}
-		Usuario usuario = objectMapper.readValue(jb.toString(), Usuario.class);
+		resp.getWriter().append(objectMapper.writeValueAsString(FileManager.carregaNecessidades(req.getParameter(NOME_EVENTO))));
 	}
 
 }

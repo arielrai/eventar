@@ -1,6 +1,4 @@
-package br.furb.evento;
-
-import java.sql.Date;
+package br.furb.model;
 
 public class Evento {
 
@@ -8,12 +6,14 @@ public class Evento {
 	private String descricao;
 	private Categoria categoria;
 	private String urlFacebook;
+	private String urlImagem;
 	private String organizador;
 	private String dtInicial;
 	private String dtFinal;
 	private String address;
 	private String lng;
 	private String lat;
+	private String localizacaoComplemento;
 
 	public String getNome() {
 		return nome;
@@ -93,6 +93,22 @@ public class Evento {
 	
 	public Categoria getCategoria() {
 		return categoria;
+	}
+
+	public void setLocalizacaoComplemento(String localizacaoComplemento) {
+		this.localizacaoComplemento = localizacaoComplemento;
+	}
+	
+	public String getLocalizacaoComplemento() {
+		return localizacaoComplemento;
+	}
+	
+	public void setUrlImagem(String urlImagem) {
+		this.urlImagem = urlImagem;
+	}
+	
+	public String getUrlImagem() {
+		return urlImagem;
 	}
 	
 }

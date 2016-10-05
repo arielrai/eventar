@@ -1,4 +1,4 @@
-package br.furb.evento;
+package br.furb.model;
 
 public class Categoria {
 
