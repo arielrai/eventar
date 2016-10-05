@@ -41,5 +41,11 @@ public class NecessidadeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.getWriter().append(objectMapper.writeValueAsString(FileManager.carregaNecessidades(req.getParameter(NOME_EVENTO))));
 	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		FileManager.excluiNecesssidades(req.getParameter(NOME_EVENTO));
+		resp.setStatus(HttpStatus.OK.value());
+	}
 
 }

@@ -66,13 +66,16 @@ var eventar = angular.module('eventar').controller('EventoCtrl', function ($scop
   };
 
   $scope.salvaNecessidades = function (eventoNome, prevEventoNome) {
-    //if($scope.listaNecessidades.length > 0){
-    var necessidades = [];
-    angular.forEach($scope.listaNecessidades, function (value, key) {
-      necessidades.push({descricao: value.descricao, eventoNome: eventoNome, prevEventoNome: prevEventoNome})
-    });
-    $http.post('https://localhost:8443/necessidade', necessidades);
-    //}
+    if ($scope.listaNecessidades.length > 0) {
+      var necessidades = [];
+      angular.forEach($scope.listaNecessidades, function (value, key) {
+        necessidades.push({descricao: value.descricao, eventoNome: eventoNome, prevEventoNome: prevEventoNome})
+      });
+      $http.post('https://localhost:8443/necessidade', necessidades);
+    }else{
+      
+      $http.delete('https://localhost:8443/necessidade?nome=' + $scope.evento.nome)
+    }
   };
 
   $scope.secondStepTooltip = function () {

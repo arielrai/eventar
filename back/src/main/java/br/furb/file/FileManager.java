@@ -142,4 +142,9 @@ public class FileManager {
 		}
 		return necessidades;
 	}
+	
+	public static void excluiNecesssidades(String eventoNome) {
+		File file = new File(String.format(NECESSIDADES_FILE, eventoNome));
+		file.delete();
+	}
 }
