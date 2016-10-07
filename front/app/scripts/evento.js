@@ -73,7 +73,7 @@ var eventar = angular.module('eventar').controller('EventoCtrl', function ($scop
       });
       $http.post('https://localhost:8443/necessidade', necessidades);
     }else{
-      
+
       $http.delete('https://localhost:8443/necessidade?nome=' + $scope.evento.nome)
     }
   };
