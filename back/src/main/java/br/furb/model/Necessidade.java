@@ -1,5 +1,6 @@
 package br.furb.model;
 
+@Deprecated
 public class Necessidade {
 
 	private transient String prevEventoNome;

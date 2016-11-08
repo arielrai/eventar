@@ -1,5 +1,6 @@
 package br.furb.model;
 
+@Deprecated
 public class Usuario {
 
 	private String email;
@@ -45,5 +46,4 @@ public class Usuario {
 				+ termosPoliticas + "]";
 	}
 
-	
 }

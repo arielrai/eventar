@@ -8,9 +8,9 @@
           <br class="form-group col-sm-7 col-md-7">
             <label>O quê você precisa no evento?</label>
             <div class="input-group">
-              <input required class="form-control" placeholder="Digite uma necessidade. Ex.: DJ,  Refrigerante, etc" ng-model="necessidade.descricao">
+              <input class="form-control" placeholder="Digite uma necessidade. Ex.: DJ,  Refrigerante, etc" ng-model="necessidade.descricao">
               <span class="input-group-btn">
-                <button class="btn btn-primary btn-block" ng-click="adicionarNecessidade(necessidade)"
+                <button class="btn btn-primary btn-block" ng-click="adicionarNecessidade(evento.id, necessidade)"
                         ng-disabled="!necessidade.descricao">Adicionar</button>
               </span>
             </div>
@@ -24,7 +24,7 @@
                   ng-class="{selecionado : necessidade.selecionado}" ng-repeat="necessidade in listaNecessidades">
                 <td>{{necessidade.descricao}}</td>
                 <td style="margin-left: auto">
-                  <button uib-tooltip="Clique aqui para excluir a necessidade" class="btn btn-info" ng-click="removerNecessidade(necessidade)" ng-show="necessidade.selecionado">
+                  <button uib-tooltip="Clique aqui para excluir a necessidade" class="btn btn-info" ng-click="removerNecessidade(evento.id, necessidade.id, necessidade)" ng-show="necessidade.selecionado">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                   </button>
                 </td>

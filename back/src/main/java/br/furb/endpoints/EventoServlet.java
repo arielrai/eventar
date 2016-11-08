@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.soap.AddressingFeature.Responses;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -17,7 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.furb.file.FileManager;
 
-@WebServlet("/evento")
+@Deprecated
+//@WebServlet("/evento")
 public class EventoServlet extends HttpServlet {
 
 	private static final String NOME = "nome";

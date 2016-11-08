@@ -1,18 +1,18 @@
 /**
  * Created by Ariel on 24/09/2016.
  */
-var eventar = angular.module('eventar').controller('EventoCtrl', function ($scope, NgMap, $http, $routeParams) {
+var eventar = angular.module('eventar').controller('EventoCtrl', function ($scope, NgMap, $http, $routeParams, $location) {
   $scope.evento = {};
   $scope.listaNecessidades = [];
 
-  if (!!$routeParams.eventoNome) {
-    $http.get('https://localhost:8443/evento?nome=' + $routeParams.eventoNome).then(function (response) {
+  if (!!$routeParams.eventoId) {
+    $http.get('https://localhost:8443/evento/' + $routeParams.eventoId).then(function (response) {
       $scope.evento = response.data;
       $scope.eventoOriginalName = angular.copy($scope.evento.nome);
       angular.element(document.querySelector('#data1')).val($scope.evento.dtInicial);
       angular.element(document.querySelector('#data2')).val($scope.evento.dtFinal);
     });
-    $http.get('https://localhost:8443/necessidade?nome=' + $routeParams.eventoNome).then(function (response) {
+    $http.get('https://localhost:8443/necessidade/' + $routeParams.eventoId).then(function (response) {
       $scope.listaNecessidades = response.data;
     });
 
@@ -55,27 +55,20 @@ var eventar = angular.module('eventar').controller('EventoCtrl', function ($scop
     }
   }
 
-  $scope.salvaEvento = function () {
-    $http.post('https://localhost:8443/evento', $scope.evento);
-    if (!!$scope.eventoOriginalName && !angular.equals($scope.eventoOriginalName, $scope.evento.nome)) {
-      $scope.salvaNecessidades($scope.evento.nome, $scope.eventoOriginalName);
-      $scope.eventoOriginalName = $scope.evento.nome;
-    } else {
-      $scope.salvaNecessidades($scope.evento.nome);
-    }
-  };
-
-  $scope.salvaNecessidades = function (eventoNome, prevEventoNome) {
-    if ($scope.listaNecessidades.length > 0) {
-      var necessidades = [];
-      angular.forEach($scope.listaNecessidades, function (value, key) {
-        necessidades.push({descricao: value.descricao, eventoNome: eventoNome, prevEventoNome: prevEventoNome})
-      });
-      $http.post('https://localhost:8443/necessidade', necessidades);
-    }else{
-
-      $http.delete('https://localhost:8443/necessidade?nome=' + $scope.evento.nome)
-    }
+  $scope.salvaEvento = function (navegaParaEvento) {
+    var eventoId = !!$scope.evento.id ? '/'+$scope.evento.id : '';
+    $http.post('https://localhost:8443/evento'+eventoId, $scope.evento).then(function(response){
+      $scope.evento = response.data;
+      if (navegaParaEvento){
+        $location.path('/eventos');
+      }
+    });
+    //if (!!$scope.eventoOriginalName && !angular.equals($scope.eventoOriginalName, $scope.evento.nome)) {
+    //  $scope.salvaNecessidades($scope.evento.nome, $scope.eventoOriginalName);
+    //  $scope.eventoOriginalName = $scope.evento.nome;
+    //} else {
+    //  $scope.salvaNecessidades($scope.evento.nome);
+    //}
   };
 
   $scope.secondStepTooltip = function () {
@@ -199,20 +192,23 @@ eventar.directive('localizacao', function (NgMap, $http) {
   }
 });
 
-eventar.directive('necessidades', function () {
+eventar.directive('necessidades', function ($http) {
   return {
     templateUrl: 'pages/evento/eventoNecessidades.html',
     restrict: 'E',
     scope: false,
     link: function ($scope) {
-      $scope.adicionarNecessidade = function (necessidade) {
+      $scope.adicionarNecessidade = function (eventoId, necessidade) {
+        $http.post('https://localhost:8443/necessidade/' + eventoId, necessidade).then(function (response) {
+          necessidade = response.data;
+        });
         $scope.listaNecessidades.push(necessidade);
         delete $scope.necessidade;
       }
 
-      $scope.removerNecessidade = function (necessidade) {
-        var index;
-        index = $scope.listaNecessidades.indexOf(necessidade);
+      $scope.removerNecessidade = function (eventoId, necessidadeId, necessidade) {
+        $http.delete('https://localhost:8443/necessidade/' + eventoId + '/' + necessidadeId);
+        var index = $scope.listaNecessidades.indexOf(necessidade);
         $scope.listaNecessidades.splice(index, 1);
         delete $scope.necessidade;
       }
@@ -227,8 +223,7 @@ eventar.directive('resumo', function ($location) {
     scope: false,
     link: function ($scope) {
       $scope.finalizarEvento = function () {
-        $scope.salvaEvento();
-        $location.path('/eventos');
+        $scope.salvaEvento(true);
       }
     }
   }

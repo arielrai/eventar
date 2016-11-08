@@ -13,12 +13,18 @@
             <label>Organizador*</label>
             <input required type="text" class="form-control" placeholder="Digite o nome do organizador do evento. Ex.: Fulano de Tal" ng-model="evento.organizador"/>
           </div>
+          <div class="form-group col-sm-7 col-md-12">
+            <label>*Categoria </label>
+            <input required type="text" class="form-control" placeholder="Digite a categoria" ng-model="evento.categoria"/>
+          </div>
+          <!--
           <div class="form-group col-sm-6 col-md-6">
             <label>Categoria*</label>
             <select required class="form-control" ng-options="option.nome for option in categorias track by option.nome" ng-model="evento.categoria">
               <option value="" disabled selected hidden>Selecione a categoria</option>
             </select>
-          </div>
+          </div> -->
+
           <div class="form-group col-sm-6 col-md-6">
             <label>Evento no facebook</label>
             <input  type="text" class="form-control" ng-model="evento.urlFacebook" placeholder="Ex.: https://www.facebook.com/events/MeuEvento"

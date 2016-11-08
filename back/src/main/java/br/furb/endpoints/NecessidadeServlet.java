@@ -16,7 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.furb.file.FileManager;
 
-@WebServlet("/necessidade")
+@Deprecated
+//@WebServlet("/necessidade")
 public class NecessidadeServlet extends HttpServlet {
 
 	private static final String NOME_EVENTO = "nome";

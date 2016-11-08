@@ -14,8 +14,8 @@ angular.module('eventar').controller('EventosCtrl', function ($scope, $http, $lo
     alert("selected date is " + $scope.selecteddate);
   });
 
-  $scope.navigateEvento = function(nome){
-    $location.path('/novoEvento/'+ nome);
+  $scope.navigateEvento = function(id){
+    $location.path('/novoEvento/'+ id);
   }
 
   //Calcula a distância de um evento

@@ -1,11 +1,10 @@
-package br.furb.model;
+package br.furb.endpoints.evento;
 
-@Deprecated
-public class Evento {
+public class EventoPojo {
 
 	private String nome;
 	private String descricao;
-	private Categoria categoria;
+	private String categoria;
 	private String urlFacebook;
 	private String urlImagem;
 	private String organizador;
@@ -15,6 +14,7 @@ public class Evento {
 	private String lng;
 	private String lat;
 	private String localizacaoComplemento;
+	private Long id;
 
 	public String getNome() {
 		return nome;
@@ -88,11 +88,11 @@ public class Evento {
 		this.lat = lat;
 	}
 
-	public void setCategoria(Categoria categoria) {
+	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
 	
-	public Categoria getCategoria() {
+	public String getCategoria() {
 		return categoria;
 	}
 
@@ -111,5 +111,12 @@ public class Evento {
 	public String getUrlImagem() {
 		return urlImagem;
 	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
+	public Long getId() {
+		return id;
+	}
 }

@@ -1,4 +1,4 @@
-var app = angular.module('eventar', ['ngRoute', 'ui.bootstrap', 'thatisuday.dropzone',
+var app = angular.module('eventar', ['ngRoute', 'ui.bootstrap', 
   'ui.bootstrap.datetimepicker', 'ngMap']);
 app.config(function ($routeProvider) {
   $routeProvider
@@ -6,7 +6,7 @@ app.config(function ($routeProvider) {
       templateUrl: 'pages/eventos.html',
       controller: 'EventosCtrl'
     })
-    .when('/novoEvento/:eventoNome?', {
+    .when('/novoEvento/:eventoId?', {
       templateUrl: 'pages/novoEvento.html',
       controller: 'EventoCtrl'
     })

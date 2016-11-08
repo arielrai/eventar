@@ -1,5 +1,6 @@
 package br.furb.model;
 
+@Deprecated
 public class Categoria {
 
 	private Long id;

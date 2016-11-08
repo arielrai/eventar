@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.soap.AddressingFeature.Responses;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -18,7 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.furb.file.FileManager;
 import br.furb.model.Usuario;
 
-@WebServlet("/usuario")
+@Deprecated
+//@WebServlet("/usuario")
 public class UsuarioServlet extends HttpServlet {
 
 	private static final ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().build();
