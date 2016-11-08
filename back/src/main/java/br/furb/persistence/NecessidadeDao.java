@@ -21,7 +21,7 @@ public class NecessidadeDao extends BaseDao<NecessidadeEntity, NecessidadePojo> 
 	@Override
 	protected NecessidadeEntity pojoToEntity(NecessidadePojo pojo, NecessidadeEntity entity) {
 		entity.setDescricao(pojo.getDescricao());
-		entity.setCodigo(pojo.getCodigo());
+//		entity.setCodigo(pojo.getCodigo());
 		return entity;
 	}
 
@@ -55,10 +55,10 @@ public class NecessidadeDao extends BaseDao<NecessidadeEntity, NecessidadePojo> 
 				.getSessionFactory().getCurrentSession().createCriteria(NecessidadeEntity.class);
 		eventoNecessidadeCriteria.createAlias("evento", "ev");
 		eventoNecessidadeCriteria.add(Restrictions.eq("ev.id", eventoCodigo));
-		Projections.max("codigo");
+		eventoNecessidadeCriteria.setProjection(Projections.max("codigo"));
 		Object uniqueResult = eventoNecessidadeCriteria.uniqueResult();
 		if (uniqueResult != null) {
-			return ((Long)uniqueResult)+1L;
+			return (Long)uniqueResult+1L;
 		}else{
 			return 1L;
 		}
