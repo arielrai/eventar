@@ -35,6 +35,8 @@
         <li class=""><a href="#/criarConta">Criar conta</a></li>
         -->
         <li class="btn-outline btn-fill-white nav-pills"><a href="#/novoEvento">Novo evento</a></li>
+        <li class="btn-outline btn-fill-white nav-pills" ng-hide="!!login"><a href="#/login">Faça login</a></li>
+        <li class="btn-outline btn-fill-white nav-pills" ng-show="!!login"><a>{{login}}</a></li>
 
       </ul>
     </nav><!--/.navbar-collapse -->
@@ -53,7 +55,7 @@
 </div>
 
 <div class="footer navbar-fixed-bottom footer-background">
-  Desenvolvedores: Ariel R. Rodrigues, Mirella Maciel, Marcela Koepsel, Paulo Koglin.
+  Desenvolvedores: Ariel R. Rodrigues, Mirella Maciel, Paulo Koglin.
   <div class="pull-right">
     Visite nosso <u><a href="https://github.com/arielrai/eventar"> Repositório</a></u>
   </div>

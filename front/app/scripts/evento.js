@@ -1,20 +1,20 @@
 /**
  * Created by Ariel on 24/09/2016.
  */
-var eventar = angular.module('eventar').controller('EventoCtrl', function ($scope, NgMap, $http, $routeParams, $location) {
+var eventar = angular.module('eventar').controller('EventoCtrl', function ($scope, NgMap, $http, $routeParams, $location, $rootScope) {
   $scope.evento = {};
   $scope.listaNecessidades = [];
 
   if (!!$routeParams.eventoId) {
-    $http.get('https://localhost:8443/evento/' + $routeParams.eventoId).then(function (response) {
+    $http.get($rootScope.formatUrl('evento/' + $routeParams.eventoId)).then(function (response) {
       $scope.evento = response.data;
       $scope.eventoOriginalName = angular.copy($scope.evento.nome);
       angular.element(document.querySelector('#data1')).val($scope.evento.dtInicial);
       angular.element(document.querySelector('#data2')).val($scope.evento.dtFinal);
-    });
-    $http.get('https://localhost:8443/necessidade/' + $routeParams.eventoId).then(function (response) {
+    }, $rootScope.errorHandle);
+    $http.get($rootScope.formatUrl('necessidade/' + $routeParams.eventoId)).then(function (response) {
       $scope.listaNecessidades = response.data;
-    });
+    }, $rootScope.errorHandle);
 
   }
 
@@ -57,7 +57,7 @@ var eventar = angular.module('eventar').controller('EventoCtrl', function ($scop
 
   $scope.salvaEvento = function (navegaParaEvento) {
     var eventoId = !!$scope.evento.id ? '/'+$scope.evento.id : '';
-    $http.post('https://localhost:8443/evento'+eventoId, $scope.evento).then(function(response){
+    $http.post($rootScope.formatUrl('evento'+eventoId), $scope.evento).then(function(response){
       $scope.evento = response.data;
       if (navegaParaEvento){
         $location.path('/eventos');
@@ -129,7 +129,7 @@ eventar.directive('dados', function () {
   }
 });
 
-eventar.directive('localizacao', function (NgMap, $http) {
+eventar.directive('localizacao', function (NgMap, $http, $rootScope) {
   return {
     templateUrl: 'pages/evento/eventoLocalizacao.html',
     restrict: 'E',
@@ -162,7 +162,7 @@ eventar.directive('localizacao', function (NgMap, $http) {
           }
           $http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $scope.evento.lat + ', ' + $scope.evento.lng + '&sensor=true').then(function (response) {
             $scope.evento.address = response.data.results[0].formatted_address;
-          });
+          }, $rootScope.errorHandle);
 
 
           markers.push(marker);
@@ -192,22 +192,22 @@ eventar.directive('localizacao', function (NgMap, $http) {
   }
 });
 
-eventar.directive('necessidades', function ($http) {
+eventar.directive('necessidades', function ($http, $rootScope) {
   return {
     templateUrl: 'pages/evento/eventoNecessidades.html',
     restrict: 'E',
     scope: false,
     link: function ($scope) {
       $scope.adicionarNecessidade = function (eventoId, necessidade) {
-        $http.post('https://localhost:8443/necessidade/' + eventoId, necessidade).then(function (response) {
+        $http.post($rootScope.formatUrl('necessidade/' + eventoId), necessidade).then(function (response) {
           necessidade = response.data;
-        });
+        }, $rootScope.errorHandle);
         $scope.listaNecessidades.push(necessidade);
         delete $scope.necessidade;
       }
 
       $scope.removerNecessidade = function (eventoId, necessidadeId, necessidade) {
-        $http.delete('https://localhost:8443/necessidade/' + eventoId + '/' + necessidadeId);
+        $http.delete($rootScope.formatUrl('necessidade/' + eventoId + '/' + necessidadeId));
         var index = $scope.listaNecessidades.indexOf(necessidade);
         $scope.listaNecessidades.splice(index, 1);
         delete $scope.necessidade;
@@ -216,7 +216,7 @@ eventar.directive('necessidades', function ($http) {
   }
 });
 
-eventar.directive('resumo', function ($location) {
+eventar.directive('resumo', function ($location, $rootScope) {
   return {
     templateUrl: 'pages/evento/eventoResumo.html',
     restrict: 'E',

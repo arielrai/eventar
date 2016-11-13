@@ -1,7 +1,7 @@
 /**
  * Created by Ariel on 24/09/2016.
  */
-angular.module('eventar').controller('EventosCtrl', function ($scope, $http, $location) {
+angular.module('eventar').controller('EventosCtrl', function ($scope, $http, $location, $rootScope) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
       $scope.currentLat = position.coords.latitude;
@@ -43,7 +43,9 @@ angular.module('eventar').controller('EventosCtrl', function ($scope, $http, $lo
     return deg * (Math.PI / 180)
   }
 
-  $http.get('https://localhost:8443/evento').then(function(response){
-    $scope.eventos = response.data;
-  });
+  $http.get($rootScope.formatUrl('evento'))
+    .then(function(response) {
+      $scope.eventos = response.data;
+    }, $rootScope.errorHandle);
+
 });
