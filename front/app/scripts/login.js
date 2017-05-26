@@ -12,7 +12,7 @@ angular.module('eventar').controller('LoginCtrl', function ($scope, $routeParams
     };
     $http(req).then(function (response) {
       $window.localStorage.setItem('token', response.data.access_token);
-      $location.path("/eventos");
+      $location.path('/eventos');
       $rootScope.login = username;
     });
   }

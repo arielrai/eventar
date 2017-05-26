@@ -35,7 +35,7 @@ app.controller('mainController', function ($scope, $rootScope, NgMap, $window, $
     $http.get($rootScope.formatUrl('auth')).then(function(reponse){
       //não vai pra tela de login
     }, function(){
-      $location.path('/login/'+"Você precisa fazer login para acessar essa área do site!");
+      $location.path('/login/'+'Você precisa fazer login para acessar essa área do site!');
     });
   }
   if(!!$window.localStorage.getItem('token')){

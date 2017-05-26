@@ -9,9 +9,9 @@ angular.module('eventar').controller('EventosCtrl', function ($scope, $http, $lo
     });
   }
 
-  angular.element( document.querySelector( '#datepicker' ) ).on("dp.change", function() {
-    $scope.selecteddate = $("#datetimepicker").val();
-    alert("selected date is " + $scope.selecteddate);
+  angular.element( document.querySelector( '#datepicker' ) ).on('dp.change', function() {
+    $scope.selecteddate = $('#datetimepicker').val();
+    alert('selected date is ' + $scope.selecteddate);
   });
 
   $scope.navigateEvento = function(id){
