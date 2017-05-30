@@ -5,11 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import br.furb.endpoints.evento.EventoPojo;
 import br.furb.model.EventoEnderecoEntity;
 import br.furb.model.EventoEntity;
+import br.furb.model.UsuarioEntity;
 
 @Repository
 public class EventoDao extends BaseDao<EventoEntity, EventoPojo> {
@@ -46,6 +50,13 @@ public class EventoDao extends BaseDao<EventoEntity, EventoPojo> {
 			entity.getEnderecos().add(eventoEnderecoEntity);
 		}
 		
+		Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession()
+				.createCriteria(UsuarioEntity.class);
+		criteria.add(Restrictions.or(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName())));
+		Object uniqueResult = criteria.uniqueResult();
+		if (uniqueResult != null) {
+			entity.setUsuario((UsuarioEntity)uniqueResult);
+		}
 		return entity;
 	}
 
@@ -57,7 +68,6 @@ public class EventoDao extends BaseDao<EventoEntity, EventoPojo> {
 		pojo.setUrlImagem(entity.getUrlImagem());
 		pojo.setDtInicial(sdf.format(entity.getDataInicial()));
 		pojo.setDtFinal(sdf.format(entity.getDataFim()));
-
 		
 		pojo.setDescricao(entity.getDescricao());
 		pojo.setNome(entity.getNomeEvento());
@@ -70,6 +80,7 @@ public class EventoDao extends BaseDao<EventoEntity, EventoPojo> {
 			pojo.setLng(eventoEnderecoEntity.getLng());
 			pojo.setAddress(eventoEnderecoEntity.getDescricao());
 		}
+		pojo.setUsuario(entity.getUsuario());
 		return pojo;
 	}
 
