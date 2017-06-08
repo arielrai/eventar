@@ -1,6 +1,5 @@
 angular.module('starter.controllers', ['ionic.wizard'])
-  .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
-
+  .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -41,10 +40,10 @@ angular.module('starter.controllers', ['ionic.wizard'])
     };
   })
 
-  .controller('eventosCtrl', function ($scope, $http) {
+  .controller('eventosCtrl', function ($scope, $rootScope, $http) {
 
     $scope.loadEventos = function () {
-      $http.get('https://localhost:8443/evento?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
+      $http.get($rootScope.url + '/evento?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
         $scope.eventos = response.data;
       }).catch(function (response) {
         $state.go('login');
@@ -56,11 +55,12 @@ angular.module('starter.controllers', ['ionic.wizard'])
     })
     $scope.loadEventos();
   })
-  .controller('LoginCtrl', function ($scope, $stateParams, $state, $http) {
+  .controller('LoginCtrl', function ($scope, $rootScope, $stateParams, $state, $http) {
+    $rootScope.url = 'https://pure-mesa-29909.herokuapp.com/';
     $scope.doLogin = function (user) {
       var req = {
         method: 'POST',
-        url: 'https://localhost:8443/oauth/token?grant_type=password&username=' + user.username + '&password=' + user.password,
+        url: $rootScope.url + '/oauth/token?grant_type=password&username=' + user.username + '&password=' + user.password,
       };
       $http(req).then(function (response) {
         window.sessionStorage.setItem('token', response.data.access_token);
