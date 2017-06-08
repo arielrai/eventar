@@ -20,6 +20,7 @@ angular.module('starter.controllers', ['ionic.wizard'])
 
     // Triggered in the login modal to close it
     $scope.closeLogin = function () {
+
       $scope.modal.hide();
     };
 
@@ -40,23 +41,34 @@ angular.module('starter.controllers', ['ionic.wizard'])
     };
   })
 
-  .controller('eventosCtrl', function ($scope) {
-    $scope.items = [
-      {title: 'Reggae', id: 1},
-      {title: 'Chill', id: 2},
-      {title: 'Dubstep', id: 3},
-      {title: 'Indie', id: 4},
-      {title: 'Rap', id: 5},
-      {title: 'Cowbell', id: 6}
-    ];
-  })
+  .controller('eventosCtrl', function ($scope, $http) {
 
-  .controller('PlaylistCtrl', function ($scope, $stateParams) {
+    $scope.loadEventos = function () {
+      $http.get('https://localhost:8443/evento?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
+        $scope.eventos = response.data;
+      }).catch(function (response) {
+        $state.go('login');
+      });
+    }
+
+    $rootScope.$on('login', function (events, args) {
+      $scope.loadEventos();
+    })
+    $scope.loadEventos();
   })
-  .controller('LoginCtrl', function ($scope, $stateParams, $state) {
+  .controller('LoginCtrl', function ($scope, $stateParams, $state, $http) {
     $scope.doLogin = function (user) {
-      console.log(user);
-      $state.go('app.eventos');
+      var req = {
+        method: 'POST',
+        url: 'https://localhost:8443/oauth/token?grant_type=password&username=' + user.username + '&password=' + user.password,
+      };
+      $http(req).then(function (response) {
+        window.sessionStorage.setItem('token', response.data.access_token);
+        $state.go('app.eventos');
+        $rootScope.$broadcast('login')
+      }).catch(function (response) {
+        $state.go('login');
+      });
     }
   });
 

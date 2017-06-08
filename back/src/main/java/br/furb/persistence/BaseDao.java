@@ -13,8 +13,7 @@ import br.furb.model.BaseEntity;
 
 public abstract class BaseDao<T extends BaseEntity, E> {
 
-	@Autowired
-	protected HibernateTemplate hibernateTemplate;
+	@Autowired protected HibernateTemplate hibernateTemplate;
 
 	public abstract Class<T> getEntityClass();
 

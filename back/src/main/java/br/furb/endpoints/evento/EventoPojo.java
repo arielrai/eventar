@@ -1,5 +1,7 @@
 package br.furb.endpoints.evento;
 
+import br.furb.model.UsuarioEntity;
+
 public class EventoPojo {
 
 	private String nome;
@@ -15,6 +17,7 @@ public class EventoPojo {
 	private String lat;
 	private String localizacaoComplemento;
 	private Long id;
+	private UsuarioEntity usuario;
 
 	public String getNome() {
 		return nome;
@@ -118,5 +121,13 @@ public class EventoPojo {
 	
 	public Long getId() {
 		return id;
+	}
+
+	public void setUsuario(UsuarioEntity usuario) {
+		this.usuario = usuario;
+	}
+	
+	public UsuarioEntity getUsuario() {
+		return usuario;
 	}
 }
