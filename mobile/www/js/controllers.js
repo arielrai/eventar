@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ionic.wizard'])
+angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
   .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -70,6 +70,21 @@ angular.module('starter.controllers', ['ionic.wizard'])
         $state.go('login');
       });
     }
+  })
+  .controller('teste', function ($scope, $rootScope, $http) {
+    $scope.itens = [
+      { produto: 'Leite', quantidade: 2, comprado: false },
+      { produto: 'Cerveja', quantidade: 12, comprado: false }
+    ];
+  })
+  .run(function ($rootScope) {
+    $rootScope.dateValue = new Date();
+    $rootScope.timeValue = new Date();
+    $rootScope.datetimeValue = new Date();
+
+    $rootScope.go = function () {
+      window.open("https://github.com/katemihalikova/ion-datetime-picker", "_blank");
+    };
   });
 
 
