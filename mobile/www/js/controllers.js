@@ -71,16 +71,14 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
       });
     }
   })
-  .controller('teste', function ($scope, $rootScope, $http) {
+  .controller('novoEvento', function ($scope, $rootScope, $http) {
     $scope.itens = [
       { produto: 'Leite', quantidade: 2, comprado: false },
       { produto: 'Cerveja', quantidade: 12, comprado: false }
     ];
-  })
-  .run(function ($rootScope) {
-    $rootScope.dateValue = new Date();
-    $rootScope.timeValue = new Date();
-    $rootScope.datetimeValue = new Date();
+    $scope.evento = {};
+    $scope.evento.dataInicial = new Date();
+    $scope.evento.dataFinal = new Date();
 
     $rootScope.go = function () {
       window.open("https://github.com/katemihalikova/ion-datetime-picker", "_blank");
