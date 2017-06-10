@@ -62,14 +62,43 @@ angular.module('starter.controllers', ['ionic.wizard'])
         method: 'POST',
         url: 'https://localhost:8443/oauth/token?grant_type=password&username=' + user.username + '&password=' + user.password,
       };
-      $http(req).then(function (response) {
-        window.sessionStorage.setItem('token', response.data.access_token);
-        $state.go('app.eventos');
-        $rootScope.$broadcast('login')
-      }).catch(function (response) {
-        $state.go('login');
-      });
+      // $http(req).then(function (response) {
+      // window.sessionStorage.setItem('token', response.data.access_token);
+      $state.go('app.eventos');
+      $rootScope.$broadcast('login')
+      // }).catch(function (response) {
+      // $state.go('login');
+      // });
     }
+  }).controller('novoEventoWizardController', function ($scope, $ionicLoading) {
+    
+    
+    $scope.mapCreated = function (map) {
+      $scope.map = map;
+      $scope.map.addListener('click', data => {
+        var uluru = { lat: data.latLng.lat(), lng: data.latLng.lng() };
+        if($scope.marker) $scope.marker.setMap(null);
+        $scope.marker = new google.maps.Marker({
+          position: uluru,
+          map: $scope.map
+        });
+        console.log(data);
+      });
+      $scope.centerOnMe();
+    };
+
+    $scope.centerOnMe = function () {
+      console.log("Centering");
+      if (!$scope.map) {
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        console.log('Got pos', pos);
+        $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      }, function (error) {
+        alert('Unable to get location: ' + error.message);
+      });
+    };
   });
 
 
