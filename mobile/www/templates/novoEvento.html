@@ -1,17 +1,49 @@
+<<<<<<< HEAD
 <ion-view view-title="Novo evento">
+=======
+<ion-view view-title="Novo evento" ng-controller="novoEvento">
+>>>>>>> e4bfbdbe5e726dccd4b6f4543e19670affbcf232
   <ion-slides options="swiperOptions" slider="swiper" ion-wizard>
     <ion-slide-page ion-wizard-step>
       <ion-content class="has-header">
         <div class="row">
           <div class="col col-center">
             <div class="card rounded">
-              <div class="item">
-                <h2 class="positive">Passo um do wizard</h2>
-              </div>
+
               <div class="item item-text-wrap">
                 <p>
                   Dados cadastrais
                 </p>
+                {{evento}}
+                <div class="list">
+                  <label class="item item-input">
+                    <span class="input-label">Título do evento: </span>
+                    <input type="text" ng-model="evento.titulo" placeholder="Título do evento">
+                  </label>
+
+                  <label class="item item-input">
+                    <span class="input-label">Organizador: </span>
+                    <input type="text" placeholder="Nome do organizador">
+                  </label>
+
+                  <label class="item item-input">
+                    <span class="input-label">Categoria: </span>
+                    <input type="text" placeholder="Categoria do evento">
+                  </label>
+
+                  <label class="item item-input">
+                    <span class="input-label">Evento no facebook: </span>
+                    <input type="text" placeholder="URL do evento">
+                  </label>
+
+
+                  <div class="item item-icon-right" ion-datetime-picker ng-model="evento.dataInicial">
+                    Data inicial:
+                    <i class="icon ion-ios-calendar positive"></i>
+                    <strong>{{dataInicial| date: "dd/MM/yyyy H:mm"}}</strong>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -28,6 +60,31 @@
         </ion-footer-bar>
       </div>
     </ion-slide-page>
+    <ion-slide-page ion-wizard-step>
+      <ion-content class="has-header">
+        <!--
+        <div class="row">
+          <div class="col col-center">
+            <div class="item item-input-inset">
+              <label class="item item-input-wrapper">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" placeholder="Type something" ng-model="step2.name" autocomplete="off">
+              </label>
+            </div>
+          </div>
+        </div>
+        -->
+        <div class="row">
+          <div class="col col-center">
+            <div class="card rounded" >
+              <div class="item">
+                <h2 class="positive">Aqui são as necessidade</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-content>
+    </ion-slide-page>
     <ion-slide-page ion-wizard-step class="has-header">
       <div class="row">
         <div class="col col-center">
@@ -39,6 +96,31 @@
               <input type="text" placeholder="Type something" ng-model="step3.something" autocomplete="off">
             </label>
           </div>
+
+          <div class="row">
+            <div class="col col-center">
+              <div class="card rounded">
+
+                <div class="item item-text-wrap">
+                  <div class="list">
+                    <table>
+                      <thead>
+                      <tr>
+                        <th>Produto</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr ng-repeat="item in itens">
+                        <td><strong>{{ item.produto }}</strong></td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </ion-slide-page>
