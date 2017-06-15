@@ -71,20 +71,78 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
       // });
     }
   }).controller('novoEventoWizardController', function ($scope, $ionicLoading) {
-    
-    
+
+
     $scope.mapCreated = function (map) {
       $scope.map = map;
+      $scope.centerOnMe();
       $scope.map.addListener('click', data => {
         var uluru = { lat: data.latLng.lat(), lng: data.latLng.lng() };
-        if($scope.marker) $scope.marker.setMap(null);
+        if ($scope.marker) $scope.marker.setMap(null);
         $scope.marker = new google.maps.Marker({
           position: uluru,
           map: $scope.map
         });
         console.log(data);
       });
-      $scope.centerOnMe();
+
+      // Create the search box and link it to the UI element.
+      var input = document.getElementById('pac-input');
+      $scope.searchBox = new google.maps.places.SearchBox(input);
+      $scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+      // Bias the SearchBox results towards current map's viewport.
+      $scope.map.addListener('bounds_changed', function () {
+        $scope.searchBox.setBounds(map.getBounds());
+      });
+
+      $scope.markers = [];
+
+      $scope.searchBox.addListener('places_changed', function () {
+        $scope.places = $scope.searchBox.getPlaces();
+
+        if ($scope.places.length == 0) {
+          return;
+        }
+
+        // Clear out the old markers.
+        $scope.markers.forEach(function (marker) {
+          marker.setMap(null);
+        });
+        $scope.markers = [];
+
+        // For each place, get the icon, name and location.
+        $scope.bounds = new google.maps.LatLngBounds();
+        $scope.places.forEach((place) => {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
+          }
+          $scope.icon = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+
+          // Create a marker for each place.
+          $scope.markers.push(new google.maps.Marker({
+            map: map,
+            title: place.name,
+            position: place.geometry.location
+          }));
+
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            $scope.bounds.union(place.geometry.viewport);
+          } else {
+            $scope.bounds.extend(place.geometry.location);
+          }
+        });
+        $scope.map.fitBounds($scope.bounds);
+      });
+
     };
 
     $scope.centerOnMe = function () {
@@ -98,7 +156,31 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
       }, function (error) {
         alert('Unable to get location: ' + error.message);
       });
-  }})
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  })
   .controller('novoEvento', function ($scope, $rootScope, $http) {
     $scope.itens = [
       { produto: 'Leite', quantidade: 2, comprado: false },
