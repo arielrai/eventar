@@ -62,13 +62,13 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
         method: 'POST',
         url: $rootScope.url + '/oauth/token?grant_type=password&username=' + user.username + '&password=' + user.password,
       };
-      // $http(req).then(function (response) {
-      // window.sessionStorage.setItem('token', response.data.access_token);
-      $state.go('app.eventos');
-      $rootScope.$broadcast('login')
-      // }).catch(function (response) {
-      // $state.go('login');
-      // });
+      $http(req).then(function (response) {
+        window.sessionStorage.setItem('token', response.data.access_token);
+        $state.go('app.eventos');
+        $rootScope.$broadcast('login')
+      }).catch(function (response) {
+        $state.go('login');
+      });
     }
   }).controller('novoEventoWizardController', function ($scope, $ionicLoading) {
 
