@@ -96,20 +96,12 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
         $scope.searchBox.setBounds(map.getBounds());
       });
 
-      $scope.markers = [];
-
       $scope.searchBox.addListener('places_changed', function () {
         $scope.places = $scope.searchBox.getPlaces();
 
         if ($scope.places.length == 0) {
           return;
         }
-
-        // Clear out the old markers.
-        $scope.markers.forEach(function (marker) {
-          marker.setMap(null);
-        });
-        $scope.markers = [];
 
         // For each place, get the icon, name and location.
         $scope.bounds = new google.maps.LatLngBounds();
@@ -125,13 +117,6 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
             anchor: new google.maps.Point(17, 34),
             scaledSize: new google.maps.Size(25, 25)
           };
-
-          // Create a marker for each place.
-          $scope.markers.push(new google.maps.Marker({
-            map: map,
-            title: place.name,
-            position: place.geometry.location
-          }));
 
           if (place.geometry.viewport) {
             // Only geocodes have viewport.
