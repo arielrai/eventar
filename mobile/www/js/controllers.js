@@ -40,7 +40,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     };
   })
 
-  .controller('eventosCtrl', function ($scope, $rootScope, $http) {
+  .controller('eventosCtrl', function ($scope, $rootScope, $http, $state) {
 
     $scope.loadEventos = function () {
       $http.get($rootScope.url + '/evento?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
