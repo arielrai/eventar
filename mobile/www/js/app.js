@@ -61,7 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
         views: {
           'menuContent': {
             templateUrl: 'templates/novoEvento.html',
-            controller: 'novoEventoWizardController'
+            controller: 'novoEvento'
           }
         }
       })
