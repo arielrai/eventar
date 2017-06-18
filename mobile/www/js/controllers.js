@@ -55,6 +55,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     })
     $scope.loadEventos();
   })
+
   .controller('LoginCtrl', function ($scope, $rootScope, $stateParams, $state, $http) {
     $rootScope.url = 'https://pure-mesa-29909.herokuapp.com/';
     $scope.doLogin = function (user) {
@@ -70,9 +71,108 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
         $state.go('login');
       });
     }
-  }).controller('novoEventoWizardController', function ($scope, $ionicLoading) {
+  })
 
+  .controller('mapsEventosCtrl', function ($scope, $ionicLoading, $state) {
+    $scope.mapCreated = function (map) {
+      $scope.map = map;
+      $scope.centerOnMe();
+      $scope.map.addListener('click', function (data) {
 
+        var uluru = { lat: data.latLng.lat(), lng: data.latLng.lng() };
+
+        if ($scope.marker) $scope.marker.setMap(null);
+
+        $scope.marker = new google.maps.Marker({
+          position: uluru,
+          map: $scope.map
+        });
+
+        // Paulo - Caixa de informações do evento.
+        var infoWindow = new google.maps.InfoWindow({
+          // $scope.evento
+          content: "<b> Festa na casa do Ariel </b></br>"+
+          "Data: 18/06/2017 14:30 <br>" +
+          "Participantes: 100 <br>"+
+           "Endereço: "+ $scope.marker.location
+
+        });
+
+        // Paulo - Mostrar a caixa de informações do evento.
+        google.maps.event.addListener($scope.marker, 'click', function () {
+          infoWindow.open($scope.map, $scope.marker);
+        });
+
+        console.log(data);
+      });
+    };
+
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('pac-input');
+    $scope.searchBox = new google.maps.places.SearchBox(input);
+    $scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    // Bias the SearchBox results towards current map's viewport.
+    $scope.map.addListener('bounds_changed', function () {
+      $scope.searchBox.setBounds(map.getBounds());
+    });
+
+    $scope.searchBox.addListener('places_changed', function () {
+      $scope.places = $scope.searchBox.getPlaces();
+
+      if ($scope.places.length == 0) {
+        return;
+      }
+
+      // Clear out the old markers.
+      if($scope.marker) $scope.marker.setMap(null);
+
+      // For each place, get the icon, name and location.
+      $scope.bounds = new google.maps.LatLngBounds();
+      $scope.places.forEach(function (place) {
+        if (!place.geometry) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+        $scope.icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        };
+
+        // Create a marker for each place.
+        $scope.marker = new google.maps.Marker({
+          map: $scope.map,
+          position: place.geometry.location
+        });
+
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          $scope.bounds.union(place.geometry.viewport);
+        } else {
+          $scope.bounds.extend(place.geometry.location);
+        }
+      });
+      $scope.map.fitBounds($scope.bounds);
+    });
+
+    $scope.centerOnMe = function () {
+      console.log("Centering");
+      if (!$scope.map) {
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        console.log('Got pos', pos);
+        $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      }, function (error) {
+        alert('Unable to get location: ' + error.message);
+      });
+    };
+  })
+
+  .controller('novoEventoWizardController', function ($scope, $ionicLoading) {
     $scope.mapCreated = function (map) {
       $scope.map = map;
       $scope.centerOnMe();
@@ -151,30 +251,8 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
         alert('Unable to get location: ' + error.message);
       });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   })
+
   .controller('novoEvento', function ($scope, $rootScope, $http) {
     $scope.necessidades = [
       { descricao: ''},
