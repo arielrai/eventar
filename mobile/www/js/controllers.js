@@ -76,7 +76,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     $scope.mapCreated = function (map) {
       $scope.map = map;
       $scope.centerOnMe();
-      $scope.map.addListener('click', data => {
+      $scope.map.addListener('click', function(data) {
         var uluru = { lat: data.latLng.lat(), lng: data.latLng.lng() };
         if ($scope.marker) $scope.marker.setMap(null);
         $scope.marker = new google.maps.Marker({
@@ -105,7 +105,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
 
         // For each place, get the icon, name and location.
         $scope.bounds = new google.maps.LatLngBounds();
-        $scope.places.forEach((place) => {
+        $scope.places.forEach(function(place) {
           if (!place.geometry) {
             console.log("Returned place contains no geometry");
             return;
