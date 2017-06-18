@@ -1,26 +1,11 @@
 <ion-view view-title="Eventos" ng-controller="eventosCtrl">
-  <ion-content>
-    <div class="list">
-      <div class="item item-divider" >
-        Meus Eventos
+  <div class="row" ng-controller="novoEventoWizardController">
+        <ion-content scroll="false">
+          <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+          <map on-create="mapCreated(map)"></map>
+        </ion-content>
+        <ion-footer-bar class="bar-stable">
+          <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
+        </ion-footer-bar>
       </div>
-      <a href="#" class="item item-thumbnail-left" ng-repeat="ev in eventos.meusEventos">
-        <img ng-src="{{ ev.urlImagem }}">
-        <h2>{{ ev.nome }}</h2>
-        <h4>{{ ev.descricao }}</h4>
-      </a>
-      <a class="item" ng-if="eventos.meusEventos.length == 0">
-        Você não possui eventos cadastrados :(
-      </a>
-      <div class="item item-divider">
-        Outros Eventos
-      </div>
-      <a href="#" class="item item-thumbnail-left" ng-repeat="ev in eventos.outrosEventos">
-        <img ng-src="{{ ev.urlImagem }}">
-        <h2>{{ ev.nome }}</h2>
-        <h4>{{ ev.descricao }}</h4>
-      </a>
-
-    </div>
-  </ion-content>
 </ion-view>
