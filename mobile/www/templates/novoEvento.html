@@ -1,129 +1,121 @@
 <ion-view view-title="Novo evento">
-<ion-view view-title="Novo evento" ng-controller="novoEvento">
-  <ion-slides options="swiperOptions" slider="swiper" ion-wizard>
-    <ion-slide-page ion-wizard-step>
-      <ion-content class="has-header">
-        <div class="row">
-          <div class="col col-center">
-            <div class="card rounded">
-              <div class="item item-text-wrap">
-                <p>
-                  Dados cadastrais
-                </p>
-                <div class="list">
-                  <label class="item item-input">
-                    <span class="input-label">Título do evento: </span>
-                    <input type="text" ng-model="evento.titulo" placeholder="Título do evento">
-                  </label>
-
-                  <label class="item item-input">
-                    <span class="input-label">Organizador: </span>
-                    <input type="text" placeholder="Nome do organizador">
-                  </label>
-
-                  <label class="item item-input">
-                    <span class="input-label">Categoria: </span>
-                    <input type="text" placeholder="Categoria do evento">
-                  </label>
-
-                  <label class="item item-input">
-                    <span class="input-label">Evento no facebook: </span>
-                    <input type="text" placeholder="URL do evento">
-                  </label>
-
-
-                  <div class="item item-icon-right" ion-datetime-picker ng-model="evento.dataInicial">
-                    <span style="display: inline-block; width: 35%; margin-right: 10px">Data inicial:</span>
-                    <i class="icon ion-ios-calendar positive"></i>
-                    <span>{{evento.dataInicial| date: "dd/MM/yyyy H:mm"}}</span>
-                  </div>
-
-                  <div class="item item-icon-right" ion-datetime-picker ng-model="evento.dataFinal">
-                    <span style="display: inline-block; width: 35%; margin-right: 10px">Data final:</span>
-                    <i class="icon ion-ios-calendar positive"></i>
-                    <span>{{evento.dataFinal| date: "dd/MM/yyyy H:mm"}}</span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </ion-content>
-    </ion-slide-page>
-    <ion-slide-page ion-wizard-step>
-      <div class="row">
-        <ion-content scroll="false">
-          <input id="pac-input" class="controls" type="text" placeholder="Pesquisa sua localização">
-          <map on-create="mapCreated(map)"></map>
-        </ion-content>
-        <ion-footer-bar class="bar-stable">
-          <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
-        </ion-footer-bar>
-      </div>
-    </ion-slide-page>
-    <ion-slide-page ion-wizard-step>
-      <ion-content class="has-header">
-        <div class="row">
-          <div class="col col-center">
-            <div class="card rounded">
-              <div class="item item-text-wrap">
-                <p>
-                  Defina o que você precisa no seu evento e encontre patrocinadores
-                </p>
-                <div class="list">
-                  <div class="item item-input-inset">
-                    <label class="item-input-wrapper">
-                      <input type="text" placeholder="Digite sua necessidade">
-                    </label>
-                    <button class="button button-small icon ion-plus"></button>
-                    <button class="button button-small icon ion-minus"></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ion-content>
-    </ion-slide-page>
-    <ion-slide-page ion-wizard-step class="has-header">
-      <div class="row">
-        <div class="col col-center">
-          <h3 class="positive">Evento já cadastrado</h3>
-          <p>Preencha apenas algumas informações adicionais</p>
-          <div class="item item-input-inset">
-            <label class="item item-input-wrapper">
-              <i class="icon ion-search placeholder-icon"></i>
-              <input type="text" placeholder="Type something" ng-model="step3.something" autocomplete="off">
-            </label>
-          </div>
-
+  <ion-view view-title="Novo evento" ng-controller="novoEvento">
+    <ion-slides options="swiperOptions" slider="swiper" ion-wizard>
+      <ion-slide-page ion-wizard-step>
+        <ion-content class="has-header">
           <div class="row">
             <div class="col col-center">
               <div class="card rounded">
-
                 <div class="item item-text-wrap">
+                  <p>
+                    Dados cadastrais
+                  </p>
                   <div class="list">
-                    <table>
-                      <thead>
-                      <tr>
-                        <th>Produto</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr ng-repeat="item in itens">
-                        <td><strong>{{ item.produto }}</strong></td>
-                      </tr>
-                      </tbody>
-                    </table>
+                    <label class="item item-input">
+                      <span class="input-label">Título do evento: </span>
+                      <input type="text" ng-model="evento.titulo" placeholder="Título do evento">
+                    </label>
+
+                    <label class="item item-input">
+                      <span class="input-label">Organizador: </span>
+                      <input type="text" placeholder="Nome do organizador">
+                    </label>
+
+                    <label class="item item-input">
+                      <span class="input-label">Categoria: </span>
+                      <input type="text" placeholder="Categoria do evento">
+                    </label>
+
+                    <label class="item item-input">
+                      <span class="input-label">Evento no facebook: </span>
+                      <input type="text" placeholder="URL do evento">
+                    </label>
+
+
+                    <div class="item item-icon-right" ion-datetime-picker ng-model="evento.dataInicial">
+                      <span style="display: inline-block; width: 35%; margin-right: 10px">Data inicial:</span>
+                      <i class="icon ion-ios-calendar positive"></i>
+                      <span>{{evento.dataInicial| date: "dd/MM/yyyy H:mm"}}</span>
+                    </div>
+
+                    <div class="item item-icon-right" ion-datetime-picker ng-model="evento.dataFinal">
+                      <span style="display: inline-block; width: 35%; margin-right: 10px">Data final:</span>
+                      <i class="icon ion-ios-calendar positive"></i>
+                      <span>{{evento.dataFinal| date: "dd/MM/yyyy H:mm"}}</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </ion-content>
+      </ion-slide-page>
+      <ion-slide-page ion-wizard-step>
+        <div class="row">
+          <ion-content scroll="false">
+            <input id="pac-input" class="controls" type="text" placeholder="Pesquisa sua localização">
+            <map on-create="mapCreated(map)"></map>
+          </ion-content>
+          <ion-footer-bar class="bar-stable">
+            <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
+          </ion-footer-bar>
+        </div>
+      </ion-slide-page>
+      <ion-slide-page ion-wizard-step>
+        <ion-content class="has-header">
+          <div class="row">
+            <div class="col col-center">
+              <div class="card rounded">
+                <div class="item item-text-wrap">
+                  <p>
+                    Defina o que você precisa no seu evento e encontre patrocinadores
+                  </p>
+                  <div class="list">
+                    <div class="item item-input-inset" ng-repeat="necessidade in necessidades">
+                      <label class="item-input-wrapper">
+                        <input type="text" placeholder="Digite sua necessidade" ng-model="necessidade.descricao">
+                      </label>
+                      <button class="button button-small icon ion-plus" ng-click="addNecessidade()"></button>
+                      <button class="button button-small icon ion-minus" ng-click="removeNecessidade($index)"></button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </ion-content>
+      </ion-slide-page>
+      <ion-slide-page ion-wizard-step>
+        <ion-content class="has-header">
+          <div class="row">
+            <div class="col col-center">
+              <div class="card rounded">
+                <div class="item item-text-wrap">
+                  <h2>Evento já cadastrado!</h2>
+                  <hr>
+                  <p>
+                    Informe apenas algumas infomações adicionais:
+                  </p>
+                  <div class="list">
+                    <label class="item item-input">
+                      <input type="text" ng-model="evento.urlImagem" placeholder="Url de imagem do evento">
+                    </label>
+                  </div>
 
-        </div>
-      </div>
-    </ion-slide-page>
-  </ion-slides>
-</ion-view>
+                  <div class="list">
+                    <div class="item item-divider">
+                      Suas necessidades
+                    </div>
+                    <a class="item" href="#" ng-repeat="necessidade in necessidades">
+                      necessidade.descricao
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ion-content>
+      </ion-slide-page>
+    </ion-slides>
+  </ion-view>

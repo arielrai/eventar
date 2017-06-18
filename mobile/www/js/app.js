@@ -47,6 +47,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
         }
       })
 
+      .state('app.eventosList', {
+        url: '/eventosList',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/eventosList.html'
+          }
+        }
+      })
+
       .state('app.novoEvento', {
         url: '/novoEvento',
         views: {

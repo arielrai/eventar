@@ -176,10 +176,25 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
 
   })
   .controller('novoEvento', function ($scope, $rootScope, $http) {
-    $scope.itens = [
-      { produto: 'Leite', quantidade: 2, comprado: false },
-      { produto: 'Cerveja', quantidade: 12, comprado: false }
+    $scope.necessidades = [
+      { descricao: ''},
     ];
+    $scope.addNecessidade = function(){
+      $scope.necessidades.push({descricao: ""});
+    }
+
+    $scope.removeNecessidade = function(index){
+      $scope.necessidades.splice(index, 1);
+    }
+
+    $scope.$watch('necessidades', function (newVal, oldVal) {
+      if($scope.necessidades == null || $scope.necessidades.length == 0){
+        $scope.necessidades = [
+          { descricao: ''}
+        ];
+      }
+    }, true);
+
     $scope.evento = {};
     $scope.evento.dataInicial = new Date();
     $scope.evento.dataFinal = new Date();
