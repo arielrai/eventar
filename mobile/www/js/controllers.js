@@ -110,7 +110,10 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
               position: markerPos
             });
 
-            var infoWindowContent = "<h4>" + record.name + "</h4>";
+            var infoWindowContent = "<h4>" + record.nome + "</h4>"+
+              "Data: "+ record.dtInicial + " até " + record.dtFinal +"<br>" +
+                "Organizado por: "+ record.usuario.nome + "<br>"
+              ;
 
             adicionarResumoInfo(marker, infoWindowContent, record);
 
