@@ -244,7 +244,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     }
   })
 
-  .controller('novoEvento', function ($scope, $rootScope, $http) {
+  .controller('novoEvento', function ($scope, $rootScope, $http, $state) {
     $scope.necessidades = [
       { descricao: ''},
     ];
