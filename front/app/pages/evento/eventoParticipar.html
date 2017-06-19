@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<form role="form" name="dados" class="panel">
+  <div class="tab-content">
+    <div class="tab-pane active col-md-12">
+      <h3>Seu evento já está salvo!</h3>
+      <hr>
+      <form>
+        <div class="col-md-12">
+          <h4>{{evento.nome}}</h4>
+          <blockquote>
+            {{evento.descricao}}
+          </blockquote>
+          <hr>
+          <div class="form-group col-sm-7 col-md-12" ng-model="evento.urlImagem">
+            <hr>
+          </div>
+          <div ng-if="listaNecessidades.length > 0">
+            <h4>Seu evento precisará de:</h4>
+            <ol>
+              <li ng-repeat="necessidade in listaNecessidades">{{necessidade.descricao}}</li>
+            </ol>
+          </div>
+          <hr>
+          <h4>Onde: {{evento.address}}</h4>
+          <div class="col-md-12" style="font-style: italic">
+            <hr>
+            <button class="btn btn-primary pull-right" ng-click="finalizarEvento()">
+              Finalizar cadastro do evento!
+            </button>
+          </div>
+      </form>
+    </div>
+  </div>
+</form>
