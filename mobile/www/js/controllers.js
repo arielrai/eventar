@@ -73,90 +73,65 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     }
   })
 
-  .controller('mapsEventosCtrl', function ($scope, $ionicLoading, $state) {
+  .controller('mapsEventosCtrl', function ($scope, $ionicLoading, $state, $http, $rootScope) {
     $scope.mapCreated = function (map) {
       $scope.map = map;
       $scope.centerOnMe();
-      $scope.map.addListener('click', function (data) {
+      loadEventos();
 
-        var uluru = { lat: data.latLng.lat(), lng: data.latLng.lng() };
+      function loadEventos() {
+        $http.get($rootScope.url + '/evento?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
+        $scope.retorno = response;
+        /*$scope.eventos = [
+          {lng:-49.06399726867676,
+            lat:-26.876832433474426},
+          {lng:-49.08358812332153,
+            lat:-26.903806794258795},
+          {lng:-49.08358812332141,
+            lat:-26.903806794258753}];*/
 
-        if ($scope.marker) $scope.marker.setMap(null);
+        var eventos = $scope.retorno.data.outrosEventos;
+        console.log("Eventos: ", eventos);
 
-        $scope.marker = new google.maps.Marker({
-          position: uluru,
-          map: $scope.map
+        //for (var j = 0; j < eventos.; j++) {
+          var records = eventos;
+
+          for (var i = 0; i < records.length; i++) {
+
+            var record = records[i];
+            var markerPos = new google.maps.LatLng(record.lat, record.lng);
+
+            console.log(record);
+
+            // Add the markerto the map
+            var marker = new google.maps.Marker({
+              map: $scope.map,
+              animation: google.maps.Animation.DROP,
+              position: markerPos
+            });
+
+            var infoWindowContent = "<h4>" + record.name + "</h4>";
+
+            adicionarResumoInfo(marker, infoWindowContent, record);
+
+          }
+        //}
+
+        function adicionarResumoInfo(marker, message, record) {
+          var infoWindow = new google.maps.InfoWindow({
+            content: message
+          });
+
+          google.maps.event.addListener(marker, 'click', function () {
+            infoWindow.open($scope.map, marker);
+          });
+        }
+
+        }).catch(function (response) {
+
         });
-
-        // Paulo - Caixa de informações do evento.
-        var infoWindow = new google.maps.InfoWindow({
-          // $scope.evento
-          content: "<b> Festa na casa do Ariel </b></br>"+
-          "Data: 18/06/2017 14:30 <br>" +
-          "Participantes: 100 <br>"+
-           "Endereço: "+ $scope.marker.location
-
-        });
-
-        // Paulo - Mostrar a caixa de informações do evento.
-        google.maps.event.addListener($scope.marker, 'click', function () {
-          infoWindow.open($scope.map, $scope.marker);
-        });
-
-        console.log(data);
-      });
+      };
     };
-
-    // Create the search box and link it to the UI element.
-    var input = document.getElementById('pac-input');
-    $scope.searchBox = new google.maps.places.SearchBox(input);
-    $scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-    // Bias the SearchBox results towards current map's viewport.
-    $scope.map.addListener('bounds_changed', function () {
-      $scope.searchBox.setBounds(map.getBounds());
-    });
-
-    $scope.searchBox.addListener('places_changed', function () {
-      $scope.places = $scope.searchBox.getPlaces();
-
-      if ($scope.places.length == 0) {
-        return;
-      }
-
-      // Clear out the old markers.
-      if($scope.marker) $scope.marker.setMap(null);
-
-      // For each place, get the icon, name and location.
-      $scope.bounds = new google.maps.LatLngBounds();
-      $scope.places.forEach(function (place) {
-        if (!place.geometry) {
-          console.log("Returned place contains no geometry");
-          return;
-        }
-        $scope.icon = {
-          url: place.icon,
-          size: new google.maps.Size(71, 71),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(25, 25)
-        };
-
-        // Create a marker for each place.
-        $scope.marker = new google.maps.Marker({
-          map: $scope.map,
-          position: place.geometry.location
-        });
-
-        if (place.geometry.viewport) {
-          // Only geocodes have viewport.
-          $scope.bounds.union(place.geometry.viewport);
-        } else {
-          $scope.bounds.extend(place.geometry.location);
-        }
-      });
-      $scope.map.fitBounds($scope.bounds);
-    });
 
     $scope.centerOnMe = function () {
       console.log("Centering");
@@ -170,7 +145,9 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
         alert('Unable to get location: ' + error.message);
       });
     };
+
   })
+
 
   .controller('novoEventoWizardController', function ($scope, $ionicLoading) {
     $scope.mapCreated = function (map) {
