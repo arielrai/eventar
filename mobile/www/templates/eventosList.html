@@ -4,7 +4,7 @@
       <div class="item item-divider" >
         Meus Eventos
       </div>
-      <a href="#" class="item item-thumbnail-left" ng-repeat="ev in eventos.meusEventos">
+      <a href="#" class="item item-thumbnail-left" ng-repeat="ev in eventos" ng-if="ev.mine">
         <img ng-src="{{ ev.urlImagem }}">
         <h2>{{ ev.nome }}</h2>
         <h4>{{ ev.descricao }}</h4>
@@ -15,9 +15,9 @@
       <div class="item item-divider">
         Outros Eventos
       </div>
-      <a href="#" class="item item-thumbnail-left" ng-repeat="ev in eventos.outrosEventos">
+      <a href="#" class="item item-thumbnail-left" ng-repeat="ev in eventos" ng-if="!ev.mine">
         <img ng-src="{{ ev.urlImagem }}">
-        <h2>{{ ev.nome }}</h2>
+        <h2>{{ ev.nome }} </h2>
         <h4>{{ ev.descricao }}</h4>
       </a>
     </div>

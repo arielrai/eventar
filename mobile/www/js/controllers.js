@@ -1,6 +1,7 @@
 angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
   .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout) {
-	  $rootScope.url = 'https://pure-mesa-29909.herokuapp.com';
+    //$rootScope.url = 'https://pure-mesa-29909.herokuapp.com';
+    $rootScope.url = 'https://localhost:8443';
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -58,7 +59,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
   })
 
   .controller('LoginCtrl', function ($scope, $rootScope, $stateParams, $state, $http, $ionicLoading, $state) {
-    $rootScope.url = 'https://pure-mesa-29909.herokuapp.com';
+    $rootScope.url = 'https://localhost:8443';
     $scope.doLogin = function (user) {
       $ionicLoading.show({
         content: 'Loading',
@@ -92,19 +93,19 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
 
       function loadEventos() {
         $http.get($rootScope.url + '/evento?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
-        $scope.retorno = response;
-        /*$scope.eventos = [
-          {lng:-49.06399726867676,
-            lat:-26.876832433474426},
-          {lng:-49.08358812332153,
-            lat:-26.903806794258795},
-          {lng:-49.08358812332141,
-            lat:-26.903806794258753}];*/
+          $scope.retorno = response;
+          /*$scope.eventos = [
+           {lng:-49.06399726867676,
+           lat:-26.876832433474426},
+           {lng:-49.08358812332153,
+           lat:-26.903806794258795},
+           {lng:-49.08358812332141,
+           lat:-26.903806794258753}];*/
 
-        var eventos = $scope.retorno.data.outrosEventos;
-        console.log("Eventos: ", eventos);
+          var eventos = $scope.retorno.data;
+          console.log("Eventos: ", eventos);
 
-        //for (var j = 0; j < eventos.; j++) {
+          //for (var j = 0; j < eventos.; j++) {
           var records = eventos;
 
           for (var i = 0; i < records.length; i++) {
@@ -121,25 +122,25 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
               position: markerPos
             });
 
-            var infoWindowContent = "<h4>" + record.nome + "</h4>"+
-              "Data: "+ record.dtInicial + " até " + record.dtFinal +"<br>" +
-                "Organizado por: "+ record.usuario.nome + "<br>"
+            var infoWindowContent = "<h4>" + record.nome + "</h4>" +
+                "Data: " + record.dtInicial + " até " + record.dtFinal + "<br>" +
+                "Organizado por: " + record.usuario.nome + "<br>"
               ;
 
             adicionarResumoInfo(marker, infoWindowContent, record);
 
           }
-        //}
+          //}
 
-        function adicionarResumoInfo(marker, message, record) {
-          var infoWindow = new google.maps.InfoWindow({
-            content: message
-          });
+          function adicionarResumoInfo(marker, message, record) {
+            var infoWindow = new google.maps.InfoWindow({
+              content: message
+            });
 
-          google.maps.event.addListener(marker, 'click', function () {
-            infoWindow.open($scope.map, marker);
-          });
-        }
+            google.maps.event.addListener(marker, 'click', function () {
+              infoWindow.open($scope.map, marker);
+            });
+          }
 
         }).catch(function (response) {
 
@@ -169,7 +170,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
       $scope.centerOnMe();
       $scope.map.addListener('click', function (data) {
         alert($scope.evento);
-        var uluru = { lat: data.latLng.lat(), lng: data.latLng.lng() };
+        var uluru = {lat: data.latLng.lat(), lng: data.latLng.lng()};
         if ($scope.marker) $scope.marker.setMap(null);
         $scope.marker = new google.maps.Marker({
           position: uluru,
@@ -196,7 +197,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
         }
 
         // Clear out the old markers.
-        if($scope.marker) $scope.marker.setMap(null);
+        if ($scope.marker) $scope.marker.setMap(null);
 
         // For each place, get the icon, name and location.
         $scope.bounds = new google.maps.LatLngBounds();
@@ -244,36 +245,50 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     }
   })
 
-  .controller('novoEvento', function ($scope, $rootScope, $http, $state) {
+  .controller('novoEvento', function ($scope, $rootScope, $http, $state, $ionicHistory) {
     $scope.necessidades = [
-      { descricao: ''},
+      {descricao: ''},
     ];
-    $scope.addNecessidade = function(){
+    $scope.addNecessidade = function () {
       $scope.necessidades.push({descricao: ""});
     }
 
-    $scope.removeNecessidade = function(index){
+    $scope.removeNecessidade = function (index) {
       $scope.necessidades.splice(index, 1);
     }
 
     $scope.salvaEvento = function (navegaParaEvento) {
-      if(!!$scope.evento.id){
-        $http.post($rootScope.url + '/evento/'+eventoId+'?access_token=' + window.sessionStorage.getItem('token'), $scope.evento).then(function (response) {
-            angular.forEach($scopes.necessidades, function (val) {
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+      if (!!$scope.evento.id) {
+        $http.post($rootScope.url + '/evento/' + eventoId + '?access_token=' + window.sessionStorage.getItem('token'), $scope.evento).then(function (response) {
+          angular.forEach($scopes.necessidades, function (necessidade, key) {
+            $http.post($rootScope.url + '/necessidade/' + eventoId + '?access_token=' + window.sessionStorage.getItem('token'), necessidade).then(function (response) {
+              console.log(response.data);
             });
+          });
         });
-      }else{
-        $http.post($rootScope.url + '/evento'+'?access_token=' + window.sessionStorage.getItem('token'), $scope.evento).then(function (response) {
-          $state.go('app.eventosList');
+      } else {
+        $http.post($rootScope.url + '/evento' + '?access_token=' + window.sessionStorage.getItem('token'), $scope.evento).then(function (response) {
+          var eventoId = response.data.id;
           delete $scope.evento;
+          angular.forEach($scope.necessidades, function (necessidade, key) {
+            $http.post($rootScope.url + '/necessidade/' + eventoId + '?access_token=' + window.sessionStorage.getItem('token'), necessidade).then(function (response) {
+              delete $scope.necessidades;
+            });
+          });
+          $state.go('app.eventosList', {}, {
+            reload: true, inherit: false, notify: true
+          });
         });
       }
     };
 
     $scope.$watch('necessidades', function (newVal, oldVal) {
-      if($scope.necessidades == null || $scope.necessidades.length == 0){
+      if ($scope.necessidades == null || $scope.necessidades.length == 0) {
         $scope.necessidades = [
-          { descricao: ''}
+          {descricao: ''}
         ];
       }
     }, true);
@@ -282,20 +297,13 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     $scope.evento.dataInicial = new Date();
     $scope.evento.dataFinal = new Date();
 
-    $rootScope.go = function () {
-      window.open("https://github.com/katemihalikova/ion-datetime-picker", "_blank");
-    };
-
-
-
-
     $scope.mapCreated = function (map) {
       $scope.map = map;
       $scope.centerOnMe();
       $scope.map.addListener('click', function (data) {
         $scope.evento.lng = data.latLng.lng();
         $scope.evento.lat = data.latLng.lat();
-        var uluru = { lat: data.latLng.lat(), lng: data.latLng.lng() };
+        var uluru = {lat: data.latLng.lat(), lng: data.latLng.lng()};
         if ($scope.marker) $scope.marker.setMap(null);
         $scope.marker = new google.maps.Marker({
           position: uluru,
@@ -322,7 +330,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
         }
 
         // Clear out the old markers.
-        if($scope.marker) $scope.marker.setMap(null);
+        if ($scope.marker) $scope.marker.setMap(null);
 
         // For each place, get the icon, name and location.
         $scope.bounds = new google.maps.LatLngBounds();

@@ -29,26 +29,21 @@
                       <span class="input-label">Categoria: </span>
                       <input type="text" placeholder="Categoria do evento" ng-model="evento.categoria">
                     </label>
-
                     <label class="item item-input">
                       <span class="input-label">Evento no facebook: </span>
                       <input type="text" placeholder="URL do evento" ng-model="evento.urlFacebook">
                     </label>
-
-
                     <div class="item item-icon-right" ion-datetime-picker ng-model="evento.dtInicial">
                       <span style="display: inline-block; width: 35%; margin-right: 10px">Data inicial:</span>
                       <i class="icon ion-ios-calendar positive"></i>
                       <span>{{evento.dtInicial| date: "dd/MM/yyyy H:mm"}}</span>
                     </div>
-
                     <div class="item item-icon-right" ion-datetime-picker ng-model="evento.dtFinal">
                       <span style="display: inline-block; width: 35%; margin-right: 10px">Data final:</span>
                       <i class="icon ion-ios-calendar positive"></i>
                       <span>{{evento.dtFinal| date: "dd/MM/yyyy H:mm"}}</span>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
