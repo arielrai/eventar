@@ -1,7 +1,7 @@
 angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
   .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout) {
-    //$rootScope.url = 'https://pure-mesa-29909.herokuapp.com';
-    $rootScope.url = 'https://localhost:8443';
+    $rootScope.url = 'https://pure-mesa-29909.herokuapp.com';
+    //$rootScope.url = 'https://localhost:8443';
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -59,7 +59,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
   })
 
   .controller('LoginCtrl', function ($scope, $rootScope, $stateParams, $state, $http, $ionicLoading, $state) {
-    $rootScope.url = 'https://localhost:8443';
+    $rootScope.url = 'https://pure-mesa-29909.herokuapp.com';
     $scope.doLogin = function (user) {
       $ionicLoading.show({
         content: 'Loading',
