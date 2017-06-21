@@ -129,7 +129,8 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
               position: markerPos
             });
 
-            var infoWindowContent = "<h4>" + record.nome + "</h4>" +
+            var infoWindowContent = "<h4><link rel=\"stylesheet\" type=\"text/css\" href="+ record.urlFacebook + ">"+ record.nome +" </h4>" +
+                "<img src="+ record.urlImagem + " height=\"100\" width=\"100\" >" + " <br>" +
                 "Data: " + record.dtInicial + " até " + record.dtFinal + "<br>" +
                 "Organizado por: " + record.usuario.nome + "<br>"
               ;
