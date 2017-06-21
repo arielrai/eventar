@@ -1,5 +1,10 @@
 angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
-  .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout) {
+  .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $ionicHistory) {
+    $rootScope.cleanHistory = function () {
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+    }
     $rootScope.url = 'https://pure-mesa-29909.herokuapp.com';
     //$rootScope.url = 'https://localhost:8443';
     // With the new view caching in Ionic, Controllers are only called
@@ -253,7 +258,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     }
   })
 
-  .controller('novoEvento', function ($scope, $rootScope, $http, $state, $ionicHistory, $stateParams, $ionicLoading) {
+  .controller('novoEvento', function ($scope, $rootScope, $http, $state, $ionicHistory, $stateParams, $ionicLoading, $rootScope) {
     //carrega
     if (!!$stateParams.id) {
       $ionicLoading.show({
@@ -399,9 +404,8 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
               delete $scope.necessidades;
             });
           });
-          $state.go('app.eventosList', {}, {
-            reload: true, inherit: false, notify: true
-          });
+          $rootScope.cleanHistory();
+          $state.go('app.eventosList');
         });
       } else {
         $http.post($rootScope.url + '/evento' + '?access_token=' + window.sessionStorage.getItem('token'), $scope.evento).then(function (response) {
@@ -412,9 +416,8 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
               delete $scope.necessidades;
             });
           });
-          $state.go('app.eventosList', {}, {
-            reload: true, inherit: false, notify: true
-          });
+          $rootScope.cleanHistory();
+          $state.go('app.eventosList');
         });
       }
     }
