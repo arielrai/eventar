@@ -4,12 +4,12 @@
       <div class="item item-divider" >
         Meus Eventos
       </div>
-      <a href="#" class="item item-thumbnail-left" ng-repeat="ev in eventos" ng-if="ev.mine">
+      <a class="item item-thumbnail-left" ng-repeat="ev in eventos" ng-if="ev.mine" ui-sref='app.novoEvento({id: {{ev.id}}} )'>
         <img ng-src="{{ ev.urlImagem }}">
         <h2>{{ ev.nome }}</h2>
         <h4>{{ ev.descricao }}</h4>
       </a>
-      <a class="item" ng-if="eventos.meusEventos.length == 0">
+      <a class="item"  ng-if="isNoneMine()">
         Você não possui eventos cadastrados :(
       </a>
       <div class="item item-divider">

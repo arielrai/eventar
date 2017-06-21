@@ -57,7 +57,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
       })
 
       .state('app.novoEvento', {
-        url: '/novoEvento',
+        url: '/novoEvento?id',
         views: {
           'menuContent': {
             templateUrl: 'templates/novoEvento.html',

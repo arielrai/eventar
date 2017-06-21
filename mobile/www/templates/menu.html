@@ -18,15 +18,15 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close href="#/app/eventos">
+        <ion-item menu-close ui-sref="app.eventos" ui-sref-opts="{reload: true, notify: true}">
           <i class="ion-ios-calendar-outline"></i>
           Eventos próximos
         </ion-item>
-        <ion-item menu-close href="#/app/eventosList">
+        <ion-item menu-close ui-sref="app.eventosList" ui-sref-opts="{reload: true, notify: true}">
           <i class="ion-ios-calendar-outline"></i>
           Eventos
         </ion-item>
-        <ion-item menu-close href="#/app/novoEvento">
+        <ion-item menu-close ui-sref="app.novoEvento" ui-sref-opts="{reload: true, notify: true}">
           <i class="ion-ios-plus-outline"></i>
           Novo Evento
         </ion-item>

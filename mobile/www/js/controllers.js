@@ -43,7 +43,14 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
   })
 
   .controller('eventosCtrl', function ($scope, $rootScope, $http, $state) {
-
+    $scope.isNoneMine = function () {
+      for (eIdx in $scope.eventos) {
+        if ($scope.eventos[eIdx].mine) {
+          return false;
+        }
+      }
+      return true;
+    }
     $scope.loadEventos = function () {
       $http.get($rootScope.url + '/evento?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
         $scope.eventos = response.data;
@@ -245,7 +252,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     }
   })
 
-  .controller('novoEvento', function ($scope, $rootScope, $http, $state, $ionicHistory) {
+  .controller('novoEvento', function ($scope, $rootScope, $http, $state, $ionicHistory, $stateParams) {
     $scope.necessidades = [
       {descricao: ''},
     ];
