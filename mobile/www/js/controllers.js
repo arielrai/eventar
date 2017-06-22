@@ -148,7 +148,8 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
             var infoWindowContent = "<h4><link rel=\"stylesheet\" type=\"text/css\" href=" + record.urlFacebook + ">" + record.nome + " </h4>" +
                 "<img src=" + record.urlImagem + " height=\"100\" width=\"100\" >" + " <br>" +
                 "Data: " + record.dtInicial + " até " + record.dtFinal + "<br>" +
-                "Organizado por: " + record.usuario.nome + "<br>"
+                "Organizado por: " + record.usuario.nome + "<br>" + 
+                '<a target="_blank" jstcache="6" href="http://www.maps.google.com.br/?q' + record.lat + ',' + record.lng + 'z=14"> <span> Vizualizar no Google Maps </span> </a>'
               ;
 
             adicionarResumoInfo(marker, infoWindowContent, record);
@@ -282,6 +283,16 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
       var terminou = false;
       $http.get($rootScope.url + '/evento/' + $stateParams.id + '?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
         $scope.evento = response.data;
+
+        //adiciona o ponto no mapa
+        var uluru = {lat: parseFloat($scope.evento.lat), lng: parseFloat($scope.evento.lng)};
+        if ($scope.marker) $scope.marker.setMap(null);
+        $scope.marker = new google.maps.Marker({
+          position: uluru,
+          map: $scope.map
+        });
+
+
         $scope.eventoOriginalName = angular.copy($scope.evento.nome);
         // if(terminou){
         $ionicLoading.hide();
