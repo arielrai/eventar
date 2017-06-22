@@ -67,6 +67,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
           }
         }
       })
+      .state('app.contribuirEvento', {
+        url: '/contribuirEvento?id',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/contribuirEvento.html',
+            controller: 'contribuirEventoController'
+          }
+        }
+      })
       .state('app.playlists', {
         url: '/playlists',
         views: {

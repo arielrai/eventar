@@ -423,6 +423,8 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     }
 
   })
-;
+  .controller('contribuirEventoController', function ($scope, $rootScope, $http, $state, $ionicHistory, $stateParams, $ionicLoading, $rootScope) {
+
+  });
 
 
