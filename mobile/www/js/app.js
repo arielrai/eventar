@@ -33,6 +33,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
         controller: 'LoginCtrl'
       })
 
+      .state('cadastroUsuario', {
+        url: '/cadastroUsuario',
+        templateUrl: 'templates/cadastroUsuario.html',
+        controller: 'cadastroUsuarioCtrl'
+      })
+
       .state('app', {
         url: '/app',
         abstract: true,

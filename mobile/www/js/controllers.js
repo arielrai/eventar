@@ -70,6 +70,12 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     $scope.loadEventos();
   })
 
+  .controller('cadastroUsuarioCtrl', function ($scope, $rootScope, $http, $state) {
+    $scope.cadastrarUsuario = function () {
+
+    }
+  })
+
   .controller('LoginCtrl', function ($scope, $rootScope, $stateParams, $state, $http, $ionicLoading, $state) {
     $rootScope.url = 'https://pure-mesa-29909.herokuapp.com';
     $scope.doLogin = function (user) {
@@ -106,13 +112,6 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
       function loadEventos() {
         $http.get($rootScope.url + '/evento?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
           $scope.retorno = response;
-          /*$scope.eventos = [
-           {lng:-49.06399726867676,
-           lat:-26.876832433474426},
-           {lng:-49.08358812332153,
-           lat:-26.903806794258795},
-           {lng:-49.08358812332141,
-           lat:-26.903806794258753}];*/
 
           var eventos = $scope.retorno.data;
           console.log("Eventos: ", eventos);
@@ -127,12 +126,28 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
 
             console.log(record);
 
-            // Add the markerto the map
-            var marker = new google.maps.Marker({
-              map: $scope.map,
-              animation: google.maps.Animation.DROP,
-              position: markerPos
-            });
+            if (record.mine) {
+              // Add the markerto the map
+              var icone = {
+                url: 'img/icone-maps.png',
+                size: new google.maps.Size(80, 80),
+                resize: new google.maps.Size(80, 80),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(0, 32)
+              };
+              var marker = new google.maps.Marker({
+                map: $scope.map,
+                animation: google.maps.Animation.DROP,
+                position: markerPos,
+                icon: icone
+              });
+            } else {
+              var marker = new google.maps.Marker({
+                map: $scope.map,
+                animation: google.maps.Animation.DROP,
+                position: markerPos
+              });
+            }
 
             var infoWindowContent = "<h4><link rel=\"stylesheet\" type=\"text/css\" href=" + record.urlFacebook + ">" + record.nome + " </h4>" +
                 "<img src=" + record.urlImagem + " height=\"100\" width=\"100\" >" + " <br>" +
@@ -151,7 +166,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
             });
 
             google.maps.event.addListener(marker, 'click', function () {
-              infoWindow.open($scope.map, marker);
+                infoWindow.open($scope.map, marker);
             });
           }
 

@@ -1,0 +1,34 @@
+<ion-view id="login" hide-nav-bar="true">
+  <ion-content padding="true" scroll="false">
+    <form ng-submit="cadastrarUsuario(user)">
+      <div class="row responsive-md">
+        <div class="col col-50 col-offset-25">
+          <div class="list">
+            <label class="item item-input">
+              <input type="text" placeholder="Digite seu e-mail" ng-model="user.email">
+            </label>
+            <label class="item item-input">
+              <input type="text" placeholder="Digite um nome de usuario" ng-model="user.username">
+            </label>
+            <label class="item item-input">
+              <input type="password" placeholder="Digite uma senha" ng-model="user.password">
+            </label>
+            <label class="item item-input">
+              <input type="password" placeholder="Confirme sua senha" ng-required="!user.password">
+            </label>
+          </div>
+          <div class="button-bar">
+            <button class="button button-block button-positive">
+              Cadastrar
+            </button>
+            <button class="button button-block button-positive" ui-sref="login">
+              Cancelar
+            </button>
+          </div>
+
+
+        </div>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>
