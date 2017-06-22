@@ -163,7 +163,8 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
             var infoWindowContent = "<h4><link rel=\"stylesheet\" type=\"text/css\" href=" + record.urlFacebook + ">" + record.nome + " </h4>" +
                 "<img src=" + record.urlImagem + " height=\"100\" width=\"100\" >" + " <br>" +
                 "Data: " + record.dtInicial + " até " + record.dtFinal + "<br>" +
-                "Organizado por: " + record.usuario.nome + "<br>"
+                "Organizado por: " + record.usuario.nome + "<br>" + 
+                '<a target="_blank" jstcache="6" href="http://www.maps.google.com.br/?q' + record.lat + ',' + record.lng + 'z=14"> <span> Vizualizar no Google Maps </span> </a>'
               ;
 
             adicionarResumoInfo(marker, infoWindowContent, record);
@@ -185,6 +186,47 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
 
         });
       };
+           // Create the search box and link it to the UI element.
+      var input = document.getElementById('pac-input');
+      $scope.searchBox = new google.maps.places.SearchBox(input);
+      $scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+      // Bias the SearchBox results towards current map's viewport.
+      $scope.map.addListener('bounds_changed', function () {
+        $scope.searchBox.setBounds(map.getBounds());
+      });
+
+      $scope.searchBox.addListener('places_changed', function () {
+        $scope.places = $scope.searchBox.getPlaces();
+
+        if ($scope.places.length == 0) {
+          return;
+        }
+
+        // For each place, get the icon, name and location.
+        $scope.bounds = new google.maps.LatLngBounds();
+        $scope.places.forEach(function (place) {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
+          }
+          $scope.icon = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            $scope.bounds.union(place.geometry.viewport);
+          } else {
+            $scope.bounds.extend(place.geometry.location);
+          }
+        });
+        $scope.map.fitBounds($scope.bounds);
+      });
     };
 
     $scope.centerOnMe = function () {
@@ -297,6 +339,16 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
       var terminou = false;
       $http.get($rootScope.url + '/evento/' + $stateParams.id + '?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
         $scope.evento = response.data;
+
+        //adiciona o ponto no mapa
+        var uluru = {lat: parseFloat($scope.evento.lat), lng: parseFloat($scope.evento.lng)};
+        if ($scope.marker) $scope.marker.setMap(null);
+        $scope.marker = new google.maps.Marker({
+          position: uluru,
+          map: $scope.map
+        });
+
+
         $scope.eventoOriginalName = angular.copy($scope.evento.nome);
         // if(terminou){
         $ionicLoading.hide();
