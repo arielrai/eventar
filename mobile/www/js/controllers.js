@@ -368,6 +368,11 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
             $scope.bounds.extend(place.geometry.location);
           }
         });
+
+        $scope.evento.lng = $scope.marker.position.lng();
+        $scope.evento.lat = $scope.marker.position.lat();
+        /*$scope.evento.address = $scope.marker.position.add();*/
+
         $scope.map.fitBounds($scope.bounds);
       });
     };

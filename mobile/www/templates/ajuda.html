@@ -1,0 +1,50 @@
+<ion-view view-title="Ajuda">
+  <ion-content>
+    <div class="list">
+      <div class="item item-divider" >
+        Tópicos de ajuda
+      </div>
+      <div class="item list-item" ng-click="eventoProximo = !eventoProximo">
+        Eventos Próximos
+        <div ng-if="eventoProximo" class="item-body">
+          <p>
+          No menu "Eventos Próximos" você pode explorar os eventos perto de você no Eventar - Maps.<br><br>
+          <h2>Vizualisando informações do evento</h2>
+          Ao clicar em cima de um marcador no mapa, você pode visualizar mais informações sobre o evento.<br>
+          <span><img src="img/ajuda-1.png" width="300" height="400"></span>
+          </p>
+        </div>
+      </div>
+      <div class="item list-item" ng-click="eventos = !eventos">
+        Eventos
+        <div ng-if="eventos" class="item-body">
+          <p>
+            No menu "Eventos" você pode visualizar os teus eventos e outros eventos.<br><br>
+          <h2>Editar Evento</h2>
+          Ao clicar em cima do seu evento na lista, você pode pode edita-lo.<br>
+          <h2>Visualizar evento</h2>
+          Ao clicar em cima de outros evento na lista, você pode visualiza-lo.<br>
+          </p>
+        </div>
+      </div>
+      <div class="item list-item" ng-click="novoEvento = !novoEvento">
+        Novo Evento
+        <div ng-if="novoEvento" class="item-body">
+          <p>
+            No menu "Novo Evento" você cria seus eventos e compartilha com a galera!<br><br>
+          <h2>Criando um Evento</h2>
+          <h3>1. Defina as informações gerais do evento.</h3>
+          <span><img src="img/ajuda-2.png" width="300" height="460"></span><br>
+          <h3>2. Defina a localização do evento.</h3>
+          <span><img src="img/ajuda-3.png" width="300" height="460"></span>
+          <h3>3. Defina as necessidades do evento e encontre patrocinadores!</h3>
+          <span><img src="img/ajuda-4.png" width="300" height="460"></span>
+          <h3>4. Chame mais atenção! Carregue uma imagem para o evento!</h3>
+          <span><img src="img/ajuda-5.png" width="300" height="460"></span>
+          </p>
+          <h2>Feito! Agora clicar em "Cadastrar Evento"</h2>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
