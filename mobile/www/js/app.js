@@ -80,7 +80,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
         url: '/contribuirEvento?id',
         views: {
           'menuContent': {
-            templateUrl: 'templates/contribuirEvento.html',
+            templateUrl: 'templates/eventoContribuir.html',
             controller: 'contribuirEventoController'
           }
         }

@@ -47,7 +47,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
     };
   })
 
-  .controller('eventosCtrl', function ($scope, $rootScope, $http, $state) {
+  .controller('eventosCtrl', function ($scope, $rootScope, $http, $state, $ionicLoading) {
     $scope.isNoneMine = function () {
       for (eIdx in $scope.eventos) {
         if ($scope.eventos[eIdx].mine) {
@@ -56,10 +56,21 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
       }
       return true;
     }
+
     $scope.loadEventos = function () {
+      $ionicLoading.show({
+        content: 'Loading',
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+      });
+
       $http.get($rootScope.url + '/evento?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
         $scope.eventos = response.data;
+        $ionicLoading.hide();
       }).catch(function (response) {
+        $ionicLoading.hide();
         $state.go('login');
       });
     }
@@ -279,7 +290,7 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
       });
       $http.get($rootScope.url + '/necessidade/' + $stateParams.id + '?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
         $scope.necessidades = response.data;
-        $scope.necessidadesOriginal = angular.copy($scope.necessidades);
+        $scope.necessidadesOriginal = [];
       });
     }
     $scope.necessidades = [
@@ -289,8 +300,11 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
       $scope.necessidades.push({descricao: ""});
     }
 
-    $scope.removeNecessidade = function (index) {
+    $scope.removeNecessidade = function (index, necessidade) {
       $scope.necessidades.splice(index, 1);
+      if (!!necessidade.id) {
+        $scope.necessidadesOriginal.push(necessidade);
+      }
     }
 
     $scope.$watch('necessidades', function (newVal, oldVal) {
@@ -404,10 +418,16 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
             }
           });
           angular.forEach($scope.necessidades, function (necessidade, key) {
-            delete necessidade.id
-            $http.post($rootScope.url + '/necessidade/' + eventoId + '?access_token=' + window.sessionStorage.getItem('token'), necessidade).then(function (response) {
-              delete $scope.necessidades;
-            });
+            if (!necessidade.id) {
+              $http.post($rootScope.url + '/necessidade/' + eventoId + '?access_token=' + window.sessionStorage.getItem('token'), necessidade).then(function (response) {
+                delete $scope.necessidades;
+              });
+            } else {
+              $http.post($rootScope.url + '/necessidade/' + $scope.evento.id + '/' + necessidade.id + '?access_token=' + window.sessionStorage.getItem('token'), necessidade).then(function (response) {
+                $state.go('app.eventosList');
+                delete $scope.necessidades;
+              });
+            }
           });
           $rootScope.cleanHistory();
           $state.go('app.eventosList');
@@ -429,7 +449,44 @@ angular.module('starter.controllers', ['ionic.wizard', 'ion-datetime-picker'])
 
   })
   .controller('contribuirEventoController', function ($scope, $rootScope, $http, $state, $ionicHistory, $stateParams, $ionicLoading, $rootScope) {
+    if (!!$stateParams.id) {
+      $ionicLoading.show({
+        content: 'Loading',
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+      });
+      var terminou = false;
+      $http.get($rootScope.url + '/evento/' + $stateParams.id + '?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
+        $scope.evento = response.data;
+        // if(terminou){
+        $ionicLoading.hide();
+        // }
+        terminou = true
+      });
+      $http.get($rootScope.url + '/necessidade/' + $stateParams.id + '?access_token=' + window.sessionStorage.getItem('token')).then(function (response) {
+        $scope.necessidades = response.data;
+        $scope.necessidadesOriginal = angular.copy($scope.necessidades);
+      });
+      $scope.salvaNecessidade = function () {
+        angular.forEach($scope.necessidades, function (necessidade, key) {
+          $http.post($rootScope.url + '/necessidade/' + $scope.evento.id + '/' + necessidade.id + '?access_token=' + window.sessionStorage.getItem('token'), necessidade).then(function (response) {
+            $state.go('app.eventosList');
+            delete $scope.necessidades;
+          });
+        });
+      }
 
+      $scope.isContribuir = function () {
+        for (necessidade in $scope.necessidades) {
+          if (!$scope.necessidades[necessidade].contribuidor) {
+            return true;
+          }
+        }
+        return false;
+      }
+    }
   });
 
 

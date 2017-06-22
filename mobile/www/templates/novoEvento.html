@@ -71,12 +71,15 @@
                     Defina o que você precisa no seu evento e encontre patrocinadores
                   </p>
                   <div class="list">
-                    <div class="item item-input-inset" ng-repeat="necessidade in necessidades">
-                      <label class="item-input-wrapper">
-                        <input type="text" placeholder="Digite sua necessidade" ng-model="necessidade.descricao">
-                      </label>
-                      <button class="button button-small icon ion-plus" ng-click="addNecessidade()"></button>
-                      <button class="button button-small icon ion-minus" ng-click="removeNecessidade($index)"></button>
+                    <div class="item item-input-inset row" ng-repeat="necessidade in necessidades">
+                        <label class="item-input-wrapper">
+                          <input type="text" placeholder="Digite sua necessidade" ng-model="necessidade.descricao">
+                        </label>
+                        <button class="button button-small icon ion-plus" ng-click="addNecessidade()"></button>
+                        <button class="button button-small icon ion-minus" ng-click="removeNecessidade($index)"></button>
+                      <div class="col col-10">
+                        <small style="width: 20%">Contribuidor: {{necessidade.contribuidor}}</small>
+                      </div>
                     </div>
                   </div>
                 </div>
