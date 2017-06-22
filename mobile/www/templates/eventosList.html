@@ -15,7 +15,7 @@
       <div class="item item-divider">
         Outros Eventos
       </div>
-      <a href="#" class="item item-thumbnail-left" ng-repeat="ev in eventos" ng-if="!ev.mine">
+      <a href="#" class="item item-thumbnail-left" ng-repeat="ev in eventos" ng-if="!ev.mine" ui-sref='app.contribuirEvento({id: {{ev.id}}})'>
         <img ng-src="{{ ev.urlImagem }}">
         <h2>{{ ev.nome }} </h2>
         <h4>{{ ev.descricao }}</h4>

@@ -1,0 +1,35 @@
+<ion-view view-title="Contribuir com o evento">
+  <ion-content>
+    <div class="card">
+      <div class="item item-divider">
+        Você deseja contribuir com o evento? :D
+        <p><strong>{{evento.nome}}</strong><br>
+          {{evento.descricao}}<br>
+          <small>Organizador: {{evento.organizador}}</small>
+        </p>
+      </div>
+      <div class="item item-text-wrap">
+        <li class="item" ng-if="!isContribuir()">
+          Ops, parece que o evento já passui contribuidor para todas as necessidades!
+        </li>
+        <ul class="list">
+          <li class="item item-checkbox" ng-repeat="necessidade in necessidades" ng-if="!necessidade.contribuidor">
+            {{necessidade.descricao}}
+            <strong ng-if="necessidade.contribuir">:D</strong>
+            <label class="checkbox">
+              <input type="checkbox" ng-model="necessidade.contribuir">
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div class="item item-divider" href>
+        <div class="row">
+          <button class="button button-block button-positive" ng-click="salvaNecessidade()" ng-disabled="!isContribuir()" >
+            Só mais um click para contribuir!
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
