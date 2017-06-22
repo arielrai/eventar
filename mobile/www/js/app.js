@@ -40,6 +40,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
         controller: 'AppCtrl'
       })
 
+      .state('app.ajuda', {
+        url: '/ajuda',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/ajuda.html'
+          }
+        }
+      })
+
       .state('app.eventos', {
         url: '/eventos',
         views: {
