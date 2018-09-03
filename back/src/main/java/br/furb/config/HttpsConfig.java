@@ -12,7 +12,7 @@ import org.apache.catalina.Context;
 @Configuration
 public class HttpsConfig {
 
-	@Bean
+	  @Bean
 	  public EmbeddedServletContainerFactory servletContainer() {
 	    TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
 	        @Override

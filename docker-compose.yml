@@ -1,0 +1,22 @@
+version: '3.1'
+services:
+  db:
+    build: .
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - 3306:3306  
+  backend:
+    build: ./back
+    links: 
+      - db
+    ports:
+      - 8086:8080
+      - 8443:8443  
+  frontend:
+    build: ./front
+    links: 
+      - backend
+    ports:
+      - 9000:9000  
